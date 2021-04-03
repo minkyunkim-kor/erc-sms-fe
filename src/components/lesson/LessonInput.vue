@@ -43,6 +43,7 @@
               hide-disabled-hours
               close-on-complete
               v-model="detail.start"
+              lazy
             />
           </v-col>
           <v-col cols="3">
@@ -52,6 +53,7 @@
               :minute-interval="10"
               hide-disabled-hours
               close-on-complete
+              lazy
               v-model="detail.end"
             />
           </v-col>
@@ -61,8 +63,8 @@
               x-small
               block
               fab
-              width="25px"
-              height="25px"
+              width="23px"
+              height="23px"
               class="pa-0 elevation-0"
               v-if="i === 0"
               @click="addDetail"
@@ -74,8 +76,8 @@
               x-small
               block
               fab
-              width="25px"
-              height="25px"
+              width="23px"
+              height="23px"
               class="pa-0 elevation-0"
               v-else
               @click="removeDetail(i)"
@@ -161,8 +163,8 @@ export default {
             },
           }
         )
-        .then((response) => {
-          console.log(response.data);
+        .then(() => {
+          this.details.length = 0;
           this.$emit("update:showInputDialog", false);
         })
         .catch((err) => this.handleError(err.response.data.message));

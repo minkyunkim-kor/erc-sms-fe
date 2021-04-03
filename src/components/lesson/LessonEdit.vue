@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="showEditDialog" persistent max-width="600px" scrollable>
+  <v-dialog v-model="showEditDialog" persistent max-width="600px">
     <v-card>
       <v-card-title>클래스 정보 수정</v-card-title>
       <v-card-text>
@@ -101,6 +101,12 @@
       </v-card-text>
     </v-card>
     <error-popup :showDialog.sync="isError" :errorMessage="errorMessage" />
+    <remove-alert
+      :showDialog.sync="removeDialog"
+      :confirmRemove.sync="confirmRemove"
+      component="lesson"
+      :target="selectLessonId"
+    />
   </v-dialog>
 </template>
 
@@ -109,6 +115,7 @@ import VueTimepicker from "vue2-timepicker/src/vue-timepicker.vue";
 import axios from "axios";
 import enc from "../util/enc";
 import ErrorPopup from "../popup/ErrorPopup";
+import RemoveAlert from "../popup/RemoveAlert";
 
 export default {
   props: {
@@ -121,10 +128,16 @@ export default {
         this.loadLessonData();
       }
     },
+    confirmRemove: function (newVal) {
+      if (newVal) {
+        this.closeDialog();
+      }
+    },
   },
   components: {
     VueTimepicker,
     ErrorPopup,
+    RemoveAlert,
   },
   data: () => ({
     name: "",
@@ -141,6 +154,8 @@ export default {
     valid: false,
     isError: false,
     errorMessage: "",
+    removeDialog: false,
+    confirmRemove: false,
   }),
   methods: {
     loadLessonData() {
@@ -163,6 +178,7 @@ export default {
             });
           });
         });
+      this.confirmRemove = false;
     },
     saveLesson() {
       if (!this.checkDataValidate()) {
@@ -189,14 +205,7 @@ export default {
         .catch((err) => this.handleError(err.response.data.message));
     },
     removeLesson() {
-      axios
-        .delete("http://118.67.134.177:8080/lesson/" + this.selectLessonId, {
-          headers: {
-            Authorization: "Bearer " + this.$store.state.token,
-            "erc-user-id": this.$store.state.uid,
-          },
-        })
-        .then(() => this.$emit("update:showEditDialog", false));
+      this.removeDialog = true;
     },
     closeDialog() {
       this.$emit("update:showEditDialog", false);
