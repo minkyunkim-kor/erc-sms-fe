@@ -33,9 +33,11 @@
           <v-list-item-content slot="activator">
             <v-list-item-title>학생 관리</v-list-item-title>
           </v-list-item-content>
-          <v-list-item-content v-for="(name, i) in studentMenu" :key="i">
-            <v-list-item-title v-text="name" />
-          </v-list-item-content>
+          <v-list-item v-for="(item, i) in studentMenu" :key="i" :to="item.to">
+            <v-list-item-content>
+              <v-list-item-title v-text="item.title" />
+            </v-list-item-content>
+          </v-list-item>
         </v-list-group>
       </v-list>
       <v-list>
@@ -65,8 +67,11 @@
 <script>
 export default {
   data: () => ({
-    classMenu: [{ title: "클래스 정보", to: "/lesson" }],
-    studentMenu: ["학생 정보", "학생 현황"],
+    classMenu: [{ title: "클래스 정보", to: "/users/lesson" }],
+    studentMenu: [
+      { title: "학생 정보", to: "/users/student" },
+      { title: "학생 현황", to: "/users/student" },
+    ],
     learningMenu: [
       "레벨테스트",
       "전체 평가데이터",

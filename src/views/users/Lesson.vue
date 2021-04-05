@@ -1,18 +1,15 @@
 <template>
   <div class="container fill" style="height: 100%">
-    <side-menu />
     <lesson-view />
   </div>
 </template>
 
 <script>
-import LessonView from "../components/lesson/LessonView";
-import SideMenu from "../components/menu/SideMenu";
+import LessonView from "../../components/lesson/LessonView";
 
 export default {
   components: {
     LessonView,
-    SideMenu,
   },
 };
 </script>
