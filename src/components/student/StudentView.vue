@@ -8,14 +8,14 @@
     <v-row align="baseline" justify="space-between" class="mt-0">
       <v-col cols="3">
         <v-text-field
-          id="student-search"
+          id="search"
           v-model="search"
           append-icon="mdi-magnify"
           placeholder="search"
         />
       </v-col>
       <v-col cols="2">
-        <v-btn id="add-student" small block>
+        <v-btn id="add-btn" small block>
           <v-icon x-small class="mr-1">mdi-plus</v-icon>
           신규 학생 등록
         </v-btn>
@@ -170,13 +170,13 @@ export default {
   margin-left: 10%;
   margin-bottom: 0px;
 }
-.v-input /deep/ #student-search {
+.v-input /deep/ #search {
   margin-left: 5%;
   font-family: "NanumSquareRound", Avenir, Helvetica, Arial, sans-serif;
   font-size: 13px;
   text-align: start;
 }
-#add-student {
+#add-btn {
   padding-left: 3%;
   padding-right: 3%;
   background-color: #00c089;

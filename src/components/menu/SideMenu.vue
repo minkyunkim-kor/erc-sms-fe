@@ -45,9 +45,11 @@
           <v-list-item-content slot="activator">
             <v-list-item-title>학습 관리</v-list-item-title>
           </v-list-item-content>
-          <v-list-item-content v-for="(name, i) in learningMenu" :key="i">
-            <v-list-item-title v-text="name" />
-          </v-list-item-content>
+          <v-list-item v-for="(item, i) in learningMenu" :key="i" :to="item.to">
+            <v-list-item-content>
+              <v-list-item-title v-text="item.title" />
+            </v-list-item-content>
+          </v-list-item>
         </v-list-group>
       </v-list>
       <v-list>
@@ -55,9 +57,11 @@
           <v-list-item-content slot="activator">
             <v-list-item-title>수납 관리</v-list-item-title>
           </v-list-item-content>
-          <v-list-item-content v-for="(name, i) in paymentMenu" :key="i">
-            <v-list-item-title v-text="name" />
-          </v-list-item-content>
+          <v-list-item v-for="(item, i) in paymentMenu" :key="i" :to="item.to">
+            <v-list-item-content>
+              <v-list-item-title v-text="item.title" />
+            </v-list-item-content>
+          </v-list-item>
         </v-list-group>
       </v-list>
     </v-navigation-drawer>
@@ -70,20 +74,20 @@ export default {
     classMenu: [{ title: "클래스 정보", to: "/users/lesson" }],
     studentMenu: [
       { title: "학생 정보", to: "/users/student" },
-      { title: "학생 현황", to: "/users/student" },
+      { title: "학생 현황", to: "/users" },
     ],
     learningMenu: [
-      "레벨테스트",
-      "전체 평가데이터",
-      "일별 평가데이터 입력",
-      "월간 보고서",
+      { title: "레벨 테스트", to: "/users/testLevel" },
+      { title: "전체 평가데이터", to: "/users/score" },
+      { title: "일별 평가데이터 입력", to: "/users" },
+      { title: "월간 보고서", to: "/users" },
     ],
     paymentMenu: [
-      "수납현황",
-      "수강료 입력",
-      "미납금 현황",
-      "매출 현황",
-      "현금영수증 정보",
+      { title: "수납현황", to: "/users" },
+      { title: "수강료 입력", to: "/users" },
+      { title: "미납금 현황", to: "/users" },
+      { title: "매출 현황", to: "/users" },
+      { title: "현금영수증 정보", to: "/users" },
     ],
     barColor: "#f4f6f9",
   }),

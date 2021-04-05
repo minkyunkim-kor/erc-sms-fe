@@ -25,6 +25,7 @@
       :headers="headers"
       :items="lessonInfo"
       :search="search"
+      disable-sort
       @dblclick:row="dblClickLesson"
     />
     <lesson-input :showInputDialog.sync="showInputDialog" />
@@ -62,34 +63,17 @@ export default {
     showInputDialog: false,
     showEditDialog: false,
     headers: [
-      {
-        text: "클래스",
-        sortable: false,
-        align: "center",
-        value: "name",
-      },
-      {
-        text: "수업시간",
-        sortable: false,
-        align: "center",
-        value: "time",
-      },
+      { text: "클래스", align: "center", value: "name" },
+      { text: "수업시간", align: "center", value: "time" },
       {
         text: "인원",
-        sortable: false,
         align: "center",
         value: "studentCount",
         filterable: false,
       },
-      {
-        text: "담당 선생님",
-        sortable: false,
-        align: "center",
-        value: "teacher",
-      },
+      { text: "담당 선생님", align: "center", value: "teacher" },
       {
         text: "학생",
-        sortable: false,
         align: "center",
         value: "student",
         filterable: false,
