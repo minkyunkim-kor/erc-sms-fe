@@ -41,20 +41,16 @@ export default {
       this.$emit("update:showDialog", false);
     },
     clickOk() {
-      if (this.component === "lesson") {
-        this.removeLesson();
-      } else {
-        this.$emit("update:showDialog", false);
-      }
-    },
-    removeLesson() {
       axios
-        .delete("http://118.67.134.177:8080/lesson/" + this.target, {
-          headers: {
-            Authorization: "Bearer " + this.$store.state.token,
-            "erc-user-id": this.$store.state.uid,
-          },
-        })
+        .delete(
+          "http://118.67.134.177:8080/" + this.component + "/" + this.target,
+          {
+            headers: {
+              Authorization: "Bearer " + this.$store.state.token,
+              "erc-user-id": this.$store.state.uid,
+            },
+          }
+        )
         .then(() => {
           this.$emit("update:showDialog", false);
           this.$emit("update:confirmRemove", true);

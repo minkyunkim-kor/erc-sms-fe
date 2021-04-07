@@ -272,10 +272,6 @@ export default {
   font-family: "NanumSquareRound", Avenir, Helvetica, Arial, sans-serif !important;
   font-size: 16px !important;
   color: white !important;
-  padding-top: 10px !important;
-  padding-bottom: 4px !important;
-}
-.v-card .v-card__title {
   padding-top: 4px !important;
   padding-bottom: 4px !important;
 }

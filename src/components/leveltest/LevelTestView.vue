@@ -16,22 +16,35 @@
       </v-col>
     </v-row>
     <v-data-table :headers="headers" :items="levelTestInfo" :search="search">
+      <template v-slot:[`item.upsert`]="{ item }">
+        <v-icon small @click="clickUpsertButton(item)">mdi-pencil</v-icon>
+      </template>
       <template v-slot:[`item.name`]="{ item }">
         <div>
           {{ getName(item.name_ko, item.name_en) }}
         </div>
       </template>
     </v-data-table>
+    <level-test-upsert :showDialog.sync="showDialog" />
   </v-container>
 </template>
 
 <script>
 import axios from "axios";
 import enc from "../util/enc";
+import LevelTestUpsert from "./LevelTestUpsert";
 
 export default {
+  components: { LevelTestUpsert },
   created() {
     this.loadStudentData();
+  },
+  watch: {
+    showDialog(newVal) {
+      if (!newVal) {
+        this.loadStudentData();
+      }
+    },
   },
   data: () => ({
     search: "",
@@ -68,8 +81,16 @@ export default {
         align: "center",
         value: "initLevel",
       },
+      {
+        text: "입력 / 수정",
+        sortable: false,
+        align: "center",
+        value: "upsert",
+      },
     ],
     levelTestInfo: [],
+    showDialog: false,
+    selectStudent: "",
   }),
   methods: {
     loadStudentData() {
@@ -95,12 +116,16 @@ export default {
               testScore: student.initTestScore,
             });
           });
-          this.$store.state.students = this.levelTestInfo;
+          this.$store.state.levelTest = this.levelTestInfo;
           this.$forceUpdate();
         });
     },
     getName(name_ko, name_en) {
       return name_ko + "(" + name_en + ")";
+    },
+    clickUpsertButton(item) {
+      this.showDialog = true;
+      this.selectStudent = item.id;
     },
   },
 };
@@ -126,5 +151,9 @@ export default {
   font-size: 13px;
   text-align: start;
   margin-bottom: 0px;
+}
+#btn-testResult {
+  font-family: "NanumSquareRound", Avenir, Helvetica, Arial, sans-serif;
+  font-size: 13px;
 }
 </style>

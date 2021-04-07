@@ -57,7 +57,7 @@
           <v-list-item-content slot="activator">
             <v-list-item-title>수납 관리</v-list-item-title>
           </v-list-item-content>
-          <v-list-item v-for="(item, i) in paymentMenu" :key="i" :to="item.to">
+          <v-list-item v-for="(item, i) in billMenu" :key="i" :to="item.to">
             <v-list-item-content>
               <v-list-item-title v-text="item.title" />
             </v-list-item-content>
@@ -77,12 +77,12 @@ export default {
       { title: "학생 현황", to: "/users" },
     ],
     learningMenu: [
-      { title: "레벨 테스트", to: "/users/testLevel" },
+      { title: "레벨 테스트", to: "/users/levelTest" },
       { title: "전체 평가데이터", to: "/users/score" },
       { title: "일별 평가데이터 입력", to: "/users" },
       { title: "월간 보고서", to: "/users" },
     ],
-    paymentMenu: [
+    billMenu: [
       { title: "수납현황", to: "/users" },
       { title: "수강료 입력", to: "/users" },
       { title: "미납금 현황", to: "/users" },

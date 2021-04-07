@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import LevelTestView from "../../components/learning/LevelTestView";
+import LevelTestView from "../../components/leveltest/LevelTestView";
 
 export default {
   components: {

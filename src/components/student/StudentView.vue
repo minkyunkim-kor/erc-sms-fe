@@ -15,7 +15,7 @@
         />
       </v-col>
       <v-col cols="2">
-        <v-btn id="add-btn" small block>
+        <v-btn id="add-btn" small block @click="clickAddStudent">
           <v-icon x-small class="mr-1">mdi-plus</v-icon>
           신규 학생 등록
         </v-btn>
@@ -28,6 +28,7 @@
       :single-expand="singleExpand"
       :expanded.sync="expanded"
       show-expand
+      @dblclick:row="dblClickStudent"
     >
       <template v-slot:[`item.gender`]="{ item }">
         <v-img
@@ -43,18 +44,44 @@
         </td>
       </template>
     </v-data-table>
+    <student-input :showInputDialog.sync="showInputDialog" />
+    <student-edit
+      :showEditDialog.sync="showEditDialog"
+      :selectedStudentId="selectStudent"
+    />
   </v-container>
 </template>
 
 <script>
 import axios from "axios";
 import enc from "../util/enc";
+import StudentInput from "./StudentInput";
+import StudentEdit from "./StudentEdit";
 
 export default {
+  components: {
+    StudentInput,
+    StudentEdit,
+  },
   created() {
     this.loadStudentData();
   },
+  watch: {
+    showInputDialog(newVal) {
+      if (!newVal) {
+        this.loadStudentData();
+      }
+    },
+    showEditDialog(newVal) {
+      if (!newVal) {
+        this.loadStudentData();
+      }
+    },
+  },
   data: () => ({
+    showInputDialog: false,
+    showEditDialog: false,
+    selectStudent: "",
     search: "",
     expanded: [],
     singleExpand: true,
@@ -100,12 +127,6 @@ export default {
         sortable: false,
         align: "center",
         value: "registeredDate",
-      },
-      {
-        text: "한글 이름",
-        sortable: false,
-        align: "center",
-        value: "name_ko",
       },
       {
         text: "학교",
@@ -156,6 +177,13 @@ export default {
           this.$store.state.students = this.studentInfo;
           this.$forceUpdate();
         });
+    },
+    clickAddStudent() {
+      this.showInputDialog = true;
+    },
+    dblClickStudent(item, select) {
+      this.selectStudent = select.item.id;
+      this.showEditDialog = true;
     },
   },
 };

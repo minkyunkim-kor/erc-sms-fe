@@ -4,7 +4,7 @@ import Login from "../views/Login";
 import User from "../views/User";
 import Lesson from "../views/users/Lesson";
 import Student from "../views/users/Student";
-import TestLevel from "../views/users/TestLevel";
+import TestLevel from "../views/users/LevelTest";
 import Score from "../views/users/Score";
 
 Vue.use(VueRouter);
@@ -18,7 +18,7 @@ const routes = [
     children: [
       { path: "lesson", name: "lesson", component: Lesson },
       { path: "student", name: "student", component: Student },
-      { path: "testLevel", name: "testLevel", component: TestLevel },
+      { path: "levelTest", name: "levelTest", component: TestLevel },
       { path: "score", name: "score", component: Score },
     ],
   },

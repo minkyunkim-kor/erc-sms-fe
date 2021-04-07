@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import ScoreView from "../../components/learning/ScoreView";
+import ScoreView from "../../components/score/ScoreView";
 
 export default {
   components: {
