@@ -74,7 +74,7 @@ export default {
     classMenu: [{ title: "클래스 정보", to: "/users/lesson" }],
     studentMenu: [
       { title: "학생 정보", to: "/users/student" },
-      { title: "학생 현황", to: "/users" },
+      { title: "학생 현황", to: "/users/summary" },
     ],
     learningMenu: [
       { title: "레벨 테스트", to: "/users/levelTest" },
@@ -83,7 +83,7 @@ export default {
       { title: "월간 보고서", to: "/users" },
     ],
     billMenu: [
-      { title: "수납현황", to: "/users" },
+      { title: "수납현황", to: "/users/bill" },
       { title: "수강료 입력", to: "/users" },
       { title: "미납금 현황", to: "/users" },
       { title: "매출 현황", to: "/users" },

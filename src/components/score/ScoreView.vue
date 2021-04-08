@@ -14,7 +14,7 @@
           placeholder="search"
         />
       </v-col>
-      <v-col cols="4">
+      <v-col cols="5">
         <v-spacer />
       </v-col>
       <v-col cols="2">
@@ -78,7 +78,12 @@
         </v-menu>
       </v-col>
     </v-row>
-    <v-data-table :headers="headers" :items="scoreInfo" disable-sort />
+    <v-data-table
+      :headers="headers"
+      :items="scoreInfo"
+      :search="search"
+      disable-sort
+    />
   </v-container>
 </template>
 
