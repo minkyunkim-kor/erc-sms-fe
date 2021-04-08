@@ -25,7 +25,7 @@
         </div>
       </template>
     </v-data-table>
-    <level-test-upsert :showDialog.sync="showDialog" />
+    <level-test-upsert :showDialog.sync="showDialog" :target="selectStudent" />
   </v-container>
 </template>
 
@@ -112,6 +112,8 @@ export default {
               initLevel:
                 (student.initLevelA !== undefined ? student.initLevelA : "") +
                 (student.initLevelB !== undefined ? student.initLevelB : ""),
+              initLevelA: student.initLevelA,
+              initLevelB: student.initLevelB,
               testLevel: student.initTestLevel,
               testScore: student.initTestScore,
             });
@@ -125,7 +127,8 @@ export default {
     },
     clickUpsertButton(item) {
       this.showDialog = true;
-      this.selectStudent = item.id;
+      this.selectStudent = item;
+      this.selectStudent.name = this.getName(item.name_ko, item.name_en);
     },
   },
 };
