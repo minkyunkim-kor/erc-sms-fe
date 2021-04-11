@@ -2,7 +2,7 @@
   <v-container fluid style="max-width: 100%; padding: 0%">
     <v-row align="start">
       <v-col cols="2" class="pt-0">
-        <p class="title">학생 현황</p>
+        <p id="title">학생 현황</p>
       </v-col>
     </v-row>
     <v-row>
@@ -25,14 +25,14 @@
             </h3>
           </v-card-title>
           <v-card-text>
-            <div class="d-flex align-center">
+            <v-row justify="center">
               <apexchart
                 type="donut"
                 width="250px"
                 :series="donut_series"
                 :options="donut_chart_options"
               />
-            </div>
+            </v-row>
             <div class="d-flex align-center border-bottom py-1 mt-4">
               <span id="chart-datalabel">신입생</span>
               <div class="ml-auto">
@@ -77,7 +77,7 @@
             </h3>
           </v-card-title>
           <v-card-text>
-            <div class="d-flex align-center">
+            <v-row justify="space-around">
               <apexchart
                 type="bar"
                 width="560"
@@ -85,7 +85,7 @@
                 :options="bar_chart_options"
                 :series="bar_series"
               />
-            </div>
+            </v-row>
           </v-card-text>
         </v-card>
       </v-col>
@@ -183,14 +183,6 @@ export default {
 </script>
 
 <style scoped>
-.v-application .title {
-  font-family: "NanumSquareRound", Avenir, Helvetica, Arial, sans-serif !important;
-  font-size: 16px !important;
-  color: #1c88e4 !important;
-  font-weight: 800;
-  margin-left: 10%;
-  margin-bottom: 0px;
-}
 .v-application .subtitle-1 {
   font-family: "NanumSquareRound", Avenir, Helvetica, Arial, sans-serif !important;
   text-align: start;
@@ -229,5 +221,8 @@ export default {
   font-family: "NanumSquareRound", Avenir, Helvetica, Arial, sans-serif !important;
   text-align: start;
   font-size: 13px !important;
+}
+.apexcharts-canvas {
+  justify-content: center;
 }
 </style>

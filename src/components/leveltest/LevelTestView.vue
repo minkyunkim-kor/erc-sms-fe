@@ -2,7 +2,7 @@
   <v-container style="max-width: 100%; padding: 0%">
     <v-row align="start">
       <v-col cols="2" class="pt-0">
-        <p class="title">레벨 테스트</p>
+        <p id="title">레벨 테스트</p>
       </v-col>
     </v-row>
     <v-row align="baseline" justify="space-between" class="mt-0">
@@ -37,12 +37,12 @@ import LevelTestUpsert from "./LevelTestUpsert";
 export default {
   components: { LevelTestUpsert },
   created() {
-    this.loadStudentData();
+    this.loadStudentLevelTestData();
   },
   watch: {
     showDialog(newVal) {
       if (!newVal) {
-        this.loadStudentData();
+        this.loadStudentLevelTestData();
       }
     },
   },
@@ -93,10 +93,10 @@ export default {
     selectStudent: "",
   }),
   methods: {
-    loadStudentData() {
+    loadStudentLevelTestData() {
       this.levelTestInfo.length = 0;
       axios
-        .get("http://118.67.134.177:8080/student", {
+        .get("http://118.67.134.177:8080/student/test", {
           headers: {
             Authorization: "Bearer " + this.$store.state.token,
             "erc-user-id": this.$store.state.uid,
@@ -110,13 +110,16 @@ export default {
               name_en: student.nameEnglish,
               grade: student.grade,
               initLevel:
-                (student.initLevelA !== undefined ? student.initLevelA : "") +
-                (student.initLevelB !== undefined ? student.initLevelB : ""),
+                (student.initLevelA !== null ? student.initLevelA : "") +
+                (student.initLevelB !== null ? student.initLevelB : ""),
               initLevelA: student.initLevelA,
               initLevelB: student.initLevelB,
-              testLevel: student.initTestLevel,
-              testScore: student.initTestScore,
+              testLevel: student.testLevel,
+              testScore: student.testScore,
             });
+          });
+          this.levelTestInfo.sort(function (a, b) {
+            return a.name_ko < b.name_ko ? -1 : a.name_ko > b.name_ko ? 1 : 0;
           });
           this.$store.state.levelTest = this.levelTestInfo;
           this.$forceUpdate();
@@ -127,22 +130,13 @@ export default {
     },
     clickUpsertButton(item) {
       this.showDialog = true;
-      this.selectStudent = item;
-      this.selectStudent.name = this.getName(item.name_ko, item.name_en);
+      this.selectStudent = item.id;
     },
   },
 };
 </script>
 
 <style scoped>
-.v-application .title {
-  font-family: "NanumSquareRound", Avenir, Helvetica, Arial, sans-serif !important;
-  font-size: 16px !important;
-  color: #1c88e4 !important;
-  font-weight: 800;
-  margin-left: 10%;
-  margin-bottom: 0px;
-}
 .v-input /deep/ #search {
   margin-left: 5%;
   font-family: "NanumSquareRound", Avenir, Helvetica, Arial, sans-serif;

@@ -2,7 +2,7 @@
   <v-container style="max-width: 100%; padding: 0%">
     <v-row align="start">
       <v-col cols="2" class="pt-0 pb-2">
-        <p class="title">수납현황</p>
+        <p id="title">수납현황</p>
       </v-col>
     </v-row>
     <v-row align="baseline" justify="start" class="mt-0">
@@ -17,7 +17,7 @@
       <v-col cols="5">
         <v-spacer />
       </v-col>
-      <v-col cols="3">
+      <v-col cols="2">
         <v-menu
           ref="dateMenu"
           v-model="dateMenu"
@@ -48,8 +48,11 @@
           />
         </v-menu>
       </v-col>
-      <v-col cols="1">
-        <v-spacer />
+      <v-col cols="2">
+        <v-btn id="add-btn" small block @click="clickAddBillButton">
+          <v-icon x-small class="mr-1">mdi-plus</v-icon>
+          수강료 등록
+        </v-btn>
       </v-col>
     </v-row>
     <v-data-table
@@ -60,14 +63,23 @@
     >
       <template v-slot:[`item.actions`]="{ item }">
         <v-btn
-          id="action_btn"
+          id="action_btn_paid"
           class="elevation-0"
           small
-          v-if="item.paidStatus !== '완납'"
+          v-if="item.paidStatus !== '미납'"
+          @click="clickPaidButton(item)"
         >
           수납
         </v-btn>
-        <v-btn id="action_btn" class="elevation-0" small v-else>수정</v-btn>
+        <v-btn
+          id="action_btn_unpaid"
+          class="elevation-0"
+          small
+          v-else
+          @click="clickPaidButton(item)"
+        >
+          수납
+        </v-btn>
       </template>
       <template v-slot:[`item.tuition`]="{ item }">
         <div>
@@ -90,14 +102,26 @@
         </div>
       </template>
     </v-data-table>
+    <bill-upsert
+      :showDialog.sync="showDialog"
+      :target="selectStudentId"
+      :targetMonth="targetMonth"
+    />
+    <bill-input :showInputDialog.sync="showInputDialog" />
   </v-container>
 </template>
 
 <script>
 import axios from "axios";
 import enc from "../util/enc";
+import BillUpsert from "./BillUpsert";
+import BillInput from "./BillInput";
 
 export default {
+  components: {
+    BillUpsert,
+    BillInput,
+  },
   created() {
     this.targetMonth = new Date();
     this.targetMonth = this.targetMonth.toISOString().substring(0, 7);
@@ -109,8 +133,21 @@ export default {
         this.loadBillList();
       }
     },
+    showDialog(newVal) {
+      if (!newVal) {
+        this.loadBillList();
+      }
+    },
+    showInputDialog(newVal) {
+      if (!newVal) {
+        this.loadBillList();
+      }
+    },
   },
   data: () => ({
+    showDialog: false,
+    showInputDialog: false,
+    selectStudentId: "",
     search: "",
     dateMenu: false,
     targetMonth: "",
@@ -176,18 +213,23 @@ export default {
         .then((response) => {
           this.bills.length = 0;
           response.data.billInfo.forEach((billInfo) => {
-            this.bills.push({
-              studentId: billInfo.studentId,
-              name: enc.decryptValue(billInfo.name),
-              grade: billInfo.grade,
-              tuition: billInfo.tuition,
-              bookPrice: billInfo.bookPrice,
-              totalPrice: Number(billInfo.tuition) + Number(billInfo.bookPrice),
-              paidStatus: this.checkPaidStatus(billInfo),
-              unpaidBill: this.checkUnpaidBill(billInfo),
-              depositDate: billInfo.depositDate,
-              depositMethod: this.convertDepositMethod(billInfo.depositMethod),
-            });
+            if (Number(billInfo.tuition) + Number(billInfo.bookPrice) > 0) {
+              this.bills.push({
+                studentId: billInfo.studentId,
+                name: enc.decryptValue(billInfo.name),
+                grade: billInfo.grade,
+                tuition: billInfo.tuition,
+                bookPrice: billInfo.bookPrice,
+                totalPrice:
+                  Number(billInfo.tuition) + Number(billInfo.bookPrice),
+                paidStatus: this.checkPaidStatus(billInfo),
+                unpaidBill: this.checkUnpaidBill(billInfo),
+                depositDate: billInfo.depositDate,
+                depositMethod: this.convertDepositMethod(
+                  billInfo.depositMethod
+                ),
+              });
+            }
           });
           this.bills.sort(function (a, b) {
             return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
@@ -196,9 +238,7 @@ export default {
     },
     checkPaidStatus(billInfo) {
       const totalPrice = Number(billInfo.tuition) + Number(billInfo.bookPrice);
-      if (totalPrice === 0) {
-        return "";
-      } else if (totalPrice === billInfo.deposit) {
+      if (totalPrice === billInfo.deposit) {
         return "완납";
       } else if (billInfo.deposit === 0) {
         return "미납";
@@ -219,18 +259,25 @@ export default {
         return "";
       }
     },
+    clickPaidButton(item) {
+      this.showDialog = true;
+      this.selectStudentId = item.studentId;
+    },
+    clickAddBillButton() {
+      this.showInputDialog = true;
+    },
   },
 };
 </script>
 
 <style scoped>
-.v-application .title {
-  font-family: "NanumSquareRound", Avenir, Helvetica, Arial, sans-serif !important;
-  font-size: 16px !important;
-  color: #1c88e4 !important;
-  font-weight: 800;
-  margin-left: 10%;
-  margin-bottom: 0px;
+#add-btn {
+  padding-left: 3%;
+  padding-right: 3%;
+  background-color: #00c089;
+  font-family: "NanumSquareRound", Avenir, Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  color: white;
 }
 .v-input /deep/ #search {
   margin-left: 5%;
@@ -243,9 +290,16 @@ export default {
   font-size: 13px;
   text-align: center;
 }
-.v-data-table /deep/ .action_btn {
+.v-data-table /deep/ #action_btn_paid {
   font-family: "NanumSquareRound", sans-serif;
   font-size: 13px;
   color: white;
+  background-color: grey;
+}
+.v-data-table /deep/ #action_btn_unpaid {
+  font-family: "NanumSquareRound", sans-serif;
+  font-size: 13px;
+  color: white;
+  background-color: #ee534f;
 }
 </style>

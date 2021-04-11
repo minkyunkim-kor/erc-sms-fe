@@ -23,4 +23,42 @@ table tbody td {
   font-weight: 400 !important;
   color: black !important;
 }
+#btn-save {
+  background-color: #1d89e4;
+  font-family: "NanumSquareRound", Avenir, Helvetica, Arial, sans-serif !important;
+  font-size: 13px !important;
+  color: white !important;
+}
+#title {
+  font-family: "NanumSquareRound", Avenir, Helvetica, Arial, sans-serif !important;
+  font-size: 16px !important;
+  color: #1c88e4 !important;
+  font-weight: 800;
+  margin-left: 10%;
+  margin-bottom: 0px;
+}
+#card-input-title {
+  background-color: #00c089 !important;
+  font-family: "NanumSquareRound", Avenir, Helvetica, Arial, sans-serif !important;
+  font-size: 16px !important;
+  color: white !important;
+  padding-top: 4px !important;
+  padding-bottom: 4px !important;
+}
+#card-edit-title {
+  background-color: #673bb7 !important;
+  font-family: "NanumSquareRound", Avenir, Helvetica, Arial, sans-serif !important;
+  font-size: 16px !important;
+  color: white !important;
+  padding-top: 4px !important;
+  padding-bottom: 4px !important;
+}
+#card-upsert-title {
+  background-color: #1d89e4 !important;
+  font-family: "NanumSquareRound", Avenir, Helvetica, Arial, sans-serif !important;
+  font-size: 16px !important;
+  color: white !important;
+  padding-top: 4px !important;
+  padding-bottom: 4px !important;
+}
 </style>

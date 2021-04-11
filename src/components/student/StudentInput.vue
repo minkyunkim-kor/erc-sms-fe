@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="showInputDialog" persistent max-width="640px">
     <v-card>
-      <v-card-title>신규 학생 등록</v-card-title>
+      <v-card-title id="card-input-title">신규 학생 등록</v-card-title>
       <v-card-text>
         <v-row id="add-component" align="baseline">
           <v-col cols="6">
@@ -145,7 +145,9 @@
             <v-btn block small @click="closeDialog">취소</v-btn>
           </v-col>
           <v-col cols="2">
-            <v-btn block small @click="clickSaveButton">저장</v-btn>
+            <v-btn id="btn-save" block small @click="clickSaveButton">
+              저장
+            </v-btn>
           </v-col>
         </v-row>
       </v-card-text>
@@ -266,14 +268,6 @@ export default {
 </script>
 
 <style scoped>
-.v-card .v-card__title {
-  background-color: #00c089 !important;
-  font-family: "NanumSquareRound", Avenir, Helvetica, Arial, sans-serif !important;
-  font-size: 16px !important;
-  color: white !important;
-  padding-top: 4px !important;
-  padding-bottom: 4px !important;
-}
 #add-component {
   margin-top: 25px;
 }

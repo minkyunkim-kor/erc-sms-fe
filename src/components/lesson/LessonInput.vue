@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="showInputDialog" persistent max-width="600px">
     <v-card>
-      <v-card-title>신규 클래스 등록</v-card-title>
+      <v-card-title id="card-input-title">신규 클래스 등록</v-card-title>
       <v-card-text>
         <v-row id="add-component">
           <v-col cols="6">
@@ -92,7 +92,7 @@
             <v-btn block small @click="closeDialog">취소</v-btn>
           </v-col>
           <v-col cols="2">
-            <v-btn block small @click="saveLesson">저장</v-btn>
+            <v-btn id="btn-save" block small @click="saveLesson">저장</v-btn>
           </v-col>
         </v-row>
       </v-card-text>
@@ -266,14 +266,6 @@ export default {
   margin-left: 10px;
   font-family: "NanumSquareRound", Avenir, Helvetica, Arial, sans-serif;
   font-size: 13px;
-}
-.v-card .v-card__title {
-  background-color: #00c089 !important;
-  font-family: "NanumSquareRound", Avenir, Helvetica, Arial, sans-serif !important;
-  font-size: 16px !important;
-  color: white !important;
-  padding-top: 4px !important;
-  padding-bottom: 4px !important;
 }
 .v-select-list /deep/ .v-list-item__title {
   font-family: "NanumSquareRound", Avenir, Helvetica, Arial, sans-serif !important;

@@ -1,8 +1,8 @@
 <template>
   <v-container style="max-width: 100%; padding: 0%">
     <v-row align="start">
-      <v-col cols="2" class="pt-0">
-        <p class="title">학생 정보</p>
+      <v-col cols="2" class="pt-0 pb-2">
+        <p id="title">학생 정보</p>
       </v-col>
     </v-row>
     <v-row align="baseline" justify="space-between" class="mt-0">
@@ -190,14 +190,6 @@ export default {
 </script>
 
 <style scoped>
-.v-application .title {
-  font-family: "NanumSquareRound", Avenir, Helvetica, Arial, sans-serif !important;
-  font-size: 16px !important;
-  color: #1c88e4 !important;
-  font-weight: 800;
-  margin-left: 10%;
-  margin-bottom: 0px;
-}
 .v-input /deep/ #search {
   margin-left: 5%;
   font-family: "NanumSquareRound", Avenir, Helvetica, Arial, sans-serif;

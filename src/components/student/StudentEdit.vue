@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="showEditDialog" persistent max-width="600px">
     <v-card>
-      <v-card-title>학생 정보 수정</v-card-title>
+      <v-card-title id="card-edit-title">학생 정보 수정</v-card-title>
       <v-card-text>
         <v-row id="add-component" align="baseline">
           <v-col cols="6">
@@ -148,7 +148,9 @@
             <v-btn block small @click="removeStudent">삭제</v-btn>
           </v-col>
           <v-col cols="2">
-            <v-btn block small @click="clickSaveButton">저장</v-btn>
+            <v-btn id="btn-save" block small @click="clickSaveButton">
+              저장
+            </v-btn>
           </v-col>
         </v-row>
       </v-card-text>
@@ -311,14 +313,6 @@ export default {
 </script>
 
 <style scoped>
-.v-card .v-card__title {
-  background-color: #673bb7 !important;
-  font-family: "NanumSquareRound", Avenir, Helvetica, Arial, sans-serif !important;
-  font-size: 16px !important;
-  color: white !important;
-  padding-top: 4px !important;
-  padding-bottom: 4px !important;
-}
 #add-component {
   margin-top: 25px;
 }

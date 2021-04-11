@@ -8,6 +8,7 @@ import StudentSummary from "../views/users/StudentSummary";
 import TestLevel from "../views/users/LevelTest";
 import Score from "../views/users/Score";
 import Bill from "../views/users/Bill";
+import Report from "../views/users/Report";
 
 Vue.use(VueRouter);
 
@@ -23,6 +24,7 @@ const routes = [
       { path: "summary", name: "summary", component: StudentSummary },
       { path: "levelTest", name: "levelTest", component: TestLevel },
       { path: "score", name: "score", component: Score },
+      { path: "report", name: "report", component: Report },
       { path: "bill", name: "bill", component: Bill },
     ],
   },

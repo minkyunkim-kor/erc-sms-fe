@@ -80,11 +80,10 @@ export default {
       { title: "레벨 테스트", to: "/users/levelTest" },
       { title: "전체 평가데이터", to: "/users/score" },
       { title: "일별 평가데이터 입력", to: "/users" },
-      { title: "월간 보고서", to: "/users" },
+      { title: "월간 보고서", to: "/users/report" },
     ],
     billMenu: [
       { title: "수납현황", to: "/users/bill" },
-      { title: "수강료 입력", to: "/users" },
       { title: "미납금 현황", to: "/users" },
       { title: "매출 현황", to: "/users" },
       { title: "현금영수증 정보", to: "/users" },

@@ -1,14 +1,14 @@
 <template>
-  <v-dialog v-model="showDialog" persistent max-width="400px">
+  <v-dialog v-model="showDialog" persistent max-width="600px">
     <v-card>
-      <v-card-title>레벨 테스트 정보 입력</v-card-title>
+      <v-card-title id="card-upsert-title">레벨 테스트 정보 입력</v-card-title>
       <v-card-text>
         <v-row id="add-component" align="baseline">
           <v-col cols="6">
             <v-text-field
               id="add-input"
               prepend-icon="mdi-account"
-              v-model="target.name"
+              v-model="details.name"
               readonly
               hide-details
             />
@@ -17,47 +17,62 @@
             <v-text-field
               id="add-input"
               prepend-icon="mdi-cake-variant"
-              v-model="target.grade"
+              v-model="details.grade"
               readonly
               hide-details
             />
           </v-col>
         </v-row>
-        <v-row align="baseline">
-          <v-col cols="6">
+        <v-row align="end">
+          <v-col cols="4">
             <v-select
               id="add-input"
+              prepend-icon="mdi-note-outline"
               :items="testLevels"
-              v-model="target.testLevel"
+              v-model="details.testLevel"
               placeholder="테스트 레벨"
               hide-details
             />
           </v-col>
-          <v-col cols="6">
+          <v-col cols="2">
             <v-text-field
               id="add-input"
-              v-model="target.testScore"
-              placeholder="테스트 점수"
+              v-model="details.testScore"
+              placeholder="점수"
               type="Number"
+              hide-details
+            />
+          </v-col>
+          <v-col cols="3">
+            <v-select
+              id="add-input"
+              prepend-icon="mdi-star-circle-outline"
+              :items="level_a"
+              v-model="details.initLevelA"
+              placeholder="결과"
+              hide-details
+            />
+          </v-col>
+          <v-col cols="3">
+            <v-select
+              id="add-input"
+              :items="level_b"
+              v-model="details.initLevelB"
               hide-details
             />
           </v-col>
         </v-row>
         <v-row align="baseline">
-          <v-col cols="6">
-            <v-select
+          <v-col cols="12">
+            <v-textarea
               id="add-input"
-              :items="level_a"
-              v-model="target.initLevelA"
-              hide-details
-            />
-          </v-col>
-          <v-col cols="6">
-            <v-select
-              id="add-input"
-              :items="level_b"
-              v-model="target.initLevelB"
-              hide-details
+              prepend-icon="mdi-lead-pencil"
+              placeholder="메모"
+              no-resize
+              rows="3"
+              clearable
+              clear-icon="mdi-close-circle-outline"
+              v-model="details.memo"
             />
           </v-col>
         </v-row>
@@ -67,7 +82,9 @@
             <v-btn block small @click="closeDialog">취소</v-btn>
           </v-col>
           <v-col cols="3">
-            <v-btn block small @click="clickSaveButton">저장</v-btn>
+            <v-btn id="btn-save" block small @click="clickSaveButton">
+              저장
+            </v-btn>
           </v-col>
         </v-row>
       </v-card-text>
@@ -78,14 +95,22 @@
 
 <script>
 import axios from "axios";
+import enc from "../util/enc";
 import ErrorPopup from "../popup/ErrorPopup";
 
 export default {
   props: {
     showDialog: Boolean,
-    target: Object,
+    target: String,
   },
   components: { ErrorPopup },
+  watch: {
+    showDialog(newVal) {
+      if (newVal) {
+        this.loadStudentLevelTestData();
+      }
+    },
+  },
   data: () => ({
     testLevels: ["레벨1", "레벨2", "레벨3"],
     level_a: ["A", "B", "C", "PR", "D", "E", "F", "G", "H", "I", "J", "K"],
@@ -109,8 +134,39 @@ export default {
     ],
     isError: false,
     errorMessage: "",
+    details: {},
   }),
   methods: {
+    loadStudentLevelTestData() {
+      axios
+        .get("http://118.67.134.177:8080/student/" + this.target + "/test", {
+          headers: {
+            Authorization: "Bearer " + this.$store.state.token,
+            "erc-user-id": this.$store.state.uid,
+          },
+        })
+        .then((response) => {
+          this.details = {
+            id: response.data.studentId,
+            name: this.getName(
+              enc.decryptValue(response.data.nameKorean),
+              response.data.nameEnglish
+            ),
+            grade: response.data.grade,
+            initLevelA: response.data.initLevelA,
+            initLevelB:
+              response.data.initLevelB !== null
+                ? response.data.initLevelB
+                : "1-1",
+            testLevel: response.data.testLevel,
+            testScore: response.data.testScore,
+            memo: response.data.memo,
+          };
+        });
+    },
+    getName(name_ko, name_en) {
+      return name_ko + "(" + name_en + ")";
+    },
     closeDialog() {
       this.$emit("update:showDialog", false);
     },
@@ -120,12 +176,13 @@ export default {
       }
       axios
         .post(
-          "http://118.67.134.177:8080/student/" + this.target.id + "/test",
+          "http://118.67.134.177:8080/student/" + this.details.id + "/test",
           {
-            initTestLevel: this.target.testLevel,
-            initTestScore: this.target.testScore,
-            initLevelA: this.target.initLevelA,
-            initLevelB: this.target.initLevelB,
+            initTestLevel: this.details.testLevel,
+            initTestScore: this.details.testScore,
+            initLevelA: this.details.initLevelA,
+            initLevelB: this.details.initLevelB,
+            memo: this.details.memo,
           },
           {
             headers: {
@@ -138,33 +195,33 @@ export default {
     },
     checkDataValidate() {
       if (
-        this.target.testLevel === undefined ||
-        this.target.testLevel.length === 0
+        this.details.testLevel === undefined ||
+        this.details.testLevel.length === 0
       ) {
         this.isError = true;
         this.errorMessage = "테스트 레벨을 선택해주세요";
         return false;
       } else if (
-        this.target.testScore === undefined ||
-        this.target.testScore === null
+        this.details.testScore === undefined ||
+        this.details.testScore === null
       ) {
         this.isError = true;
         this.errorMessage = "테스트 점수을 입력해주세요";
         return false;
-      } else if (this.target.testScore < 0 || this.target.testScore > 100) {
+      } else if (this.details.testScore < 0 || this.details.testScore > 100) {
         this.isError = true;
         this.errorMessage = "올바른 테스트 점수을 입력해주세요";
         return false;
       } else if (
-        this.target.initLevelA === undefined ||
-        this.target.initLevelA.length === 0
+        this.details.initLevelA === undefined ||
+        this.details.initLevelA.length === 0
       ) {
         this.isError = true;
         this.errorMessage = "최초 레벨을 선택해주세요";
         return false;
       } else if (
-        this.target.initLevelB === undefined ||
-        this.target.initLevelB.length === 0
+        this.details.initLevelB === undefined ||
+        this.details.initLevelB.length === 0
       ) {
         this.isError = true;
         this.errorMessage = "최초 레벨을 선택해주세요";
@@ -178,23 +235,11 @@ export default {
 </script>
 
 <style scoped>
-.v-card .v-card__title {
-  background-color: #00c089 !important;
-  font-family: "NanumSquareRound", Avenir, Helvetica, Arial, sans-serif !important;
-  font-size: 16px !important;
-  color: white !important;
-  padding-top: 4px !important;
-  padding-bottom: 4px !important;
-}
 #add-component {
   margin-top: 25px;
 }
 #button-component {
   margin-top: 25px;
-}
-.v-input /deep/ .v-label {
-  font-family: "NanumSquareRound", Avenir, Helvetica, Arial, sans-serif;
-  font-size: 13px;
 }
 .v-input /deep/ .v-input__control {
   margin-left: 5px;
