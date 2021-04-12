@@ -15,10 +15,12 @@
         />
       </v-col>
     </v-row>
-    <v-data-table :headers="headers" :items="levelTestInfo" :search="search">
-      <template v-slot:[`item.upsert`]="{ item }">
-        <v-icon small @click="clickUpsertButton(item)">mdi-pencil</v-icon>
-      </template>
+    <v-data-table
+      :headers="headers"
+      :items="levelTestInfo"
+      :search="search"
+      @dblclick:row="clickUpsertButton"
+    >
       <template v-slot:[`item.name`]="{ item }">
         <div>
           {{ getName(item.name_ko, item.name_en) }}
@@ -81,12 +83,6 @@ export default {
         align: "center",
         value: "initLevel",
       },
-      {
-        text: "입력 / 수정",
-        sortable: false,
-        align: "center",
-        value: "upsert",
-      },
     ],
     levelTestInfo: [],
     showDialog: false,
@@ -128,9 +124,9 @@ export default {
     getName(name_ko, name_en) {
       return name_ko + "(" + name_en + ")";
     },
-    clickUpsertButton(item) {
+    clickUpsertButton(item, select) {
       this.showDialog = true;
-      this.selectStudent = item.id;
+      this.selectStudent = select.item.id;
     },
   },
 };

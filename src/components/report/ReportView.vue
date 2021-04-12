@@ -102,7 +102,7 @@ import enc from "../util/enc";
 import ReportDetailView from "./ReportDetailView";
 
 export default {
-  components: { ReportDetailView, VueHtml2pdf },
+  components: { ReportDetailView },
   created() {
     this.loadStudentNames();
   },

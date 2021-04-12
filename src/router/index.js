@@ -9,6 +9,8 @@ import TestLevel from "../views/users/LevelTest";
 import Score from "../views/users/Score";
 import Bill from "../views/users/Bill";
 import Report from "../views/users/Report";
+import CashReceipt from "../views/users/CashReceipt";
+import Unpaid from "../views/users/Unpaid";
 
 Vue.use(VueRouter);
 
@@ -26,6 +28,8 @@ const routes = [
       { path: "score", name: "score", component: Score },
       { path: "report", name: "report", component: Report },
       { path: "bill", name: "bill", component: Bill },
+      { path: "cashReceipt", name: "cashReceipt", component: CashReceipt },
+      { path: "unpaid", name: "unpaid", component: Unpaid },
     ],
   },
   { path: "*", redirect: "/login" },
