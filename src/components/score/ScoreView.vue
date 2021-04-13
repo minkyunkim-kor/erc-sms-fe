@@ -14,7 +14,7 @@
           placeholder="search"
         />
       </v-col>
-      <v-col cols="5">
+      <v-col cols="1">
         <v-spacer />
       </v-col>
       <v-col cols="2">
@@ -77,13 +77,29 @@
           />
         </v-menu>
       </v-col>
+      <v-col cols="2">
+        <v-btn id="add-btn" small block>
+          <v-icon x-small class="mr-1">mdi-plus</v-icon>
+          일별 입력
+        </v-btn>
+      </v-col>
+      <v-col cols="2">
+        <v-btn id="add-btn" small block>
+          <v-icon x-small class="mr-1">mdi-plus</v-icon>
+          학생별 입력
+        </v-btn>
+      </v-col>
     </v-row>
     <v-data-table
       :headers="headers"
       :items="scoreInfo"
       :search="search"
       disable-sort
-    />
+    >
+      <template v-slot:no-data>
+        <p id="no-data">해당 기간에 입력된 평가데이터가 없습니다.</p>
+      </template>
+    </v-data-table>
   </v-container>
 </template>
 
@@ -160,7 +176,7 @@ export default {
           }
         )
         .then((response) => {
-          this.scoreInfo.length = 0;
+          this.scoreInfo = [];
           response.data.forEach((score) => {
             this.scoreInfo.push({
               studentId: score.studentId,
@@ -199,5 +215,13 @@ export default {
   font-family: "NanumSquareRound", Avenir, Helvetica, Arial, sans-serif;
   font-size: 13px;
   text-align: center;
+}
+#add-btn {
+  padding-left: 3%;
+  padding-right: 3%;
+  background-color: #00c089;
+  font-family: "NanumSquareRound", Avenir, Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  color: white;
 }
 </style>

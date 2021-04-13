@@ -61,4 +61,11 @@ table tbody td {
   padding-top: 4px !important;
   padding-bottom: 4px !important;
 }
+#no-data {
+  margin-left: 10px;
+  font-family: "NanumSquareRound", Avenir, Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  text-align: center;
+  margin: 0px;
+}
 </style>

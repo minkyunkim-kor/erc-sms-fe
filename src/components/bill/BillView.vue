@@ -101,6 +101,9 @@
           {{ currencyFormat(item.unpaidBill) }}
         </div>
       </template>
+      <template v-slot:no-data>
+        <p id="no-data">해당 기간에 입력된 수납정보가 없습니다.</p>
+      </template>
     </v-data-table>
     <bill-upsert
       :showDialog.sync="showDialog"

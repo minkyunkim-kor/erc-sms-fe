@@ -128,13 +128,6 @@ export default {
   font-size: 13px;
   text-align: start;
 }
-#no-data {
-  margin-left: 10px;
-  font-family: "NanumSquareRound", Avenir, Helvetica, Arial, sans-serif;
-  font-size: 13px;
-  text-align: center;
-  margin: 0px;
-}
 .v-input /deep/ #calendar {
   font-family: "NanumSquareRound", Avenir, Helvetica, Arial, sans-serif;
   font-size: 13px;
