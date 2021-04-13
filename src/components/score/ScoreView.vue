@@ -99,6 +99,86 @@
       <template v-slot:no-data>
         <p id="no-data">해당 기간에 입력된 평가데이터가 없습니다.</p>
       </template>
+      <template v-slot:[`header.scoreA`]="{}">
+        <v-tooltip top>
+          <template v-slot:activator="{ on }">
+            <span v-on="on">A</span>
+          </template>
+          <span>Attendance</span>
+        </v-tooltip>
+      </template>
+      <template v-slot:[`header.scoreH`]="{}">
+        <v-tooltip top>
+          <template v-slot:activator="{ on }">
+            <span v-on="on">H</span>
+          </template>
+          <span>Homework</span>
+        </v-tooltip>
+      </template>
+      <template v-slot:[`header.scoreP`]="{}">
+        <v-tooltip top>
+          <template v-slot:activator="{ on }">
+            <span v-on="on">P</span>
+          </template>
+          <span>Participation</span>
+        </v-tooltip>
+      </template>
+      <template v-slot:[`header.scoreM`]="{}">
+        <v-tooltip top>
+          <template v-slot:activator="{ on }">
+            <span v-on="on">M</span>
+          </template>
+          <span>Manner</span>
+        </v-tooltip>
+      </template>
+      <template v-slot:[`header.scoreD`]="{}">
+        <v-tooltip top>
+          <template v-slot:activator="{ on }">
+            <span v-on="on">D</span>
+          </template>
+          <span>Decoding/Phonics, Sight Word</span>
+        </v-tooltip>
+      </template>
+      <template v-slot:[`header.scoreOF`]="{}">
+        <v-tooltip top>
+          <template v-slot:activator="{ on }">
+            <span v-on="on">OF</span>
+          </template>
+          <span>Oral Reading Fluency</span>
+        </v-tooltip>
+      </template>
+      <template v-slot:[`header.scoreC`]="{}">
+        <v-tooltip top>
+          <template v-slot:activator="{ on }">
+            <span v-on="on">C</span>
+          </template>
+          <span>Comprehension</span>
+        </v-tooltip>
+      </template>
+      <template v-slot:[`header.scoreG`]="{}">
+        <v-tooltip top>
+          <template v-slot:activator="{ on }">
+            <span v-on="on">G</span>
+          </template>
+          <span>Grammar</span>
+        </v-tooltip>
+      </template>
+      <template v-slot:[`header.scoreW`]="{}">
+        <v-tooltip top>
+          <template v-slot:activator="{ on }">
+            <span v-on="on">W</span>
+          </template>
+          <span>Writing</span>
+        </v-tooltip>
+      </template>
+      <template v-slot:[`header.scoreS`]="{}">
+        <v-tooltip top>
+          <template v-slot:activator="{ on }">
+            <span v-on="on">S</span>
+          </template>
+          <span>Speaking</span>
+        </v-tooltip>
+      </template>
     </v-data-table>
   </v-container>
 </template>
