@@ -29,6 +29,12 @@ table tbody td {
   font-size: 13px !important;
   color: white !important;
 }
+#btn-search {
+  background-color: grey;
+  font-family: "NanumSquareRound", Avenir, Helvetica, Arial, sans-serif !important;
+  font-size: 13px !important;
+  color: white !important;
+}
 #title {
   font-family: "NanumSquareRound", Avenir, Helvetica, Arial, sans-serif !important;
   font-size: 16px !important;

@@ -79,7 +79,6 @@ export default {
     learningMenu: [
       { title: "레벨 테스트", to: "/users/levelTest" },
       { title: "전체 평가데이터", to: "/users/score" },
-      { title: "일별 평가데이터 입력", to: "/users" },
       { title: "월간 보고서", to: "/users/report" },
     ],
     billMenu: [

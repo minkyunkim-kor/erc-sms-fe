@@ -78,7 +78,7 @@
         </v-menu>
       </v-col>
       <v-col cols="2">
-        <v-btn id="add-btn" small block>
+        <v-btn id="add-btn" small block @click="clickDailyInputButton">
           <v-icon x-small class="mr-1">mdi-plus</v-icon>
           일별 입력
         </v-btn>
@@ -180,14 +180,17 @@
         </v-tooltip>
       </template>
     </v-data-table>
+    <score-daily-input :showDailyInputDilog.sync="showDailyInputDilog" />
   </v-container>
 </template>
 
 <script>
 import axios from "axios";
 import enc from "../util/enc";
+import ScoreDailyInput from "./ScoreDailyInput";
 
 export default {
+  components: { ScoreDailyInput },
   created() {
     this.startDate = new Date();
     this.startDate.setMonth(this.startDate.getMonth() - 3);
@@ -209,6 +212,7 @@ export default {
     },
   },
   data: () => ({
+    showDailyInputDilog: false,
     search: "",
     scoreInfo: [],
     startDateMenu: false,
@@ -274,11 +278,14 @@ export default {
               scoreG: score.scoreG,
               scoreW: score.scoreW,
               scoreS: score.scoreS,
-              teacher: score.teacher,
+              teacher: enc.decryptValue(score.teacher),
             });
           });
           this.$store.state.scoreInfo = this.scoreInfo;
         });
+    },
+    clickDailyInputButton() {
+      this.showDailyInputDilog = true;
     },
   },
 };
