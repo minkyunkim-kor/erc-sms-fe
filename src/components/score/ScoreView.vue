@@ -200,13 +200,18 @@ export default {
     this.loadScoreData();
   },
   watch: {
-    startDate: function (newVal, oldVal) {
+    startDate(newVal, oldVal) {
       if (newVal !== oldVal) {
         this.loadScoreData();
       }
     },
-    endDate: function (newVal, oldVal) {
+    endDate(newVal, oldVal) {
       if (newVal !== oldVal) {
+        this.loadScoreData();
+      }
+    },
+    showDailyInputDilog(newVal) {
+      if (!newVal) {
         this.loadScoreData();
       }
     },
@@ -278,7 +283,10 @@ export default {
               scoreG: score.scoreG,
               scoreW: score.scoreW,
               scoreS: score.scoreS,
-              teacher: enc.decryptValue(score.teacher),
+              teacher:
+                score.teacher !== "" && score.teacher !== null
+                  ? enc.decryptValue(score.teacher)
+                  : "",
             });
           });
           this.$store.state.scoreInfo = this.scoreInfo;

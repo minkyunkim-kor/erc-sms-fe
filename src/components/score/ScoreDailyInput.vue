@@ -36,7 +36,7 @@
             </v-menu>
           </v-col>
           <v-col cols="2">
-            <v-btn small block @click="clickSearchButton">조회</v-btn>
+            <v-btn small block @click="searchScoreData">조회</v-btn>
           </v-col>
         </v-row>
         <v-stepper v-model="s" class="elevation-0" id="stepper">
@@ -93,7 +93,7 @@
             </v-btn>
           </v-col>
           <v-col cols="2" v-if="s === 3">
-            <v-btn block small>저장</v-btn>
+            <v-btn block small @click="clickSaveButton">저장</v-btn>
           </v-col>
         </v-row>
       </v-card-text>
@@ -102,6 +102,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import AttitudeScore from "./daily/AttitudeScore";
 import LearningScore from "./daily/LearningScore";
 import ScoreComment from "./daily/ScoreComment";
@@ -110,8 +111,16 @@ export default {
   props: {
     showDailyInputDilog: Boolean,
   },
+  watch: {
+    showDailyInputDilog(newVal) {
+      if (newVal) {
+        this.s = 1;
+        this.targetDate = new Date().toISOString().substr(0, 10);
+        this.$refs.attitude.loadAttitudeData(this.targetDate);
+      }
+    },
+  },
   components: { AttitudeScore, LearningScore, ScoreComment },
-  created() {},
   data: () => ({
     dateMenu: false,
     targetDate: new Date().toISOString().substr(0, 10),
@@ -119,13 +128,18 @@ export default {
     scores: [],
   }),
   methods: {
-    clickSearchButton() {
+    searchScoreData() {
       if (this.s === 1) {
         this.$refs.attitude.loadAttitudeData(this.targetDate);
       } else if (this.s === 2) {
         this.$refs.learning.loadLearningData(this.targetDate);
       } else {
         this.$refs.comment.loadCommentData(this.targetDate);
+      }
+    },
+    saveScoreData() {
+      if (this.s === 1) {
+        this.s = this.$refs.attitude.saveAttitudeData(this.targetDate);
       }
     },
     saveDate() {
@@ -136,12 +150,36 @@ export default {
       this.$emit("update:showDailyInputDilog", false);
     },
     clickNextStep() {
-      this.s++;
-      this.clickSearchButton();
+      this.callSaveScoreRequest(true);
     },
     clickPrevStep() {
-      this.s--;
-      this.clickSearchButton();
+      this.callSaveScoreRequest(false);
+    },
+    clickSaveButton() {
+      this.clickNextStep();
+      this.$emit("update:showDailyInputDilog", false);
+    },
+    callSaveScoreRequest(isNext) {
+      var req = {};
+      if (this.s === 1) {
+        req = this.$refs.attitude.getSaveAttitudeDataRequest(this.targetDate);
+      } else if (this.s === 2) {
+        req = this.$refs.learning.getSaveLearningDataRequest(this.targetDate);
+      } else {
+        req = this.$refs.comment.getSaveCommentDataRequest(this.targetDate);
+      }
+      axios
+        .post("http://118.67.134.177:8080/student/score", req, {
+          headers: {
+            Authorization: "Bearer " + this.$store.state.token,
+            "erc-user-id": this.$store.state.uid,
+          },
+        })
+        .then(() => {
+          if (isNext) this.s++;
+          else this.s--;
+          this.searchScoreData();
+        });
     },
   },
 };

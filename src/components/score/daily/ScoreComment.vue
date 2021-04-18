@@ -25,7 +25,6 @@
         <v-text-field
           id="score-input"
           hide-details
-          type="number"
           :disabled="score.absent"
           v-model="score.comment"
         />
@@ -62,6 +61,7 @@ export default {
           this.scores = [];
           response.data.targets.forEach((score) => {
             this.scores.push({
+              studentId: score.studentId,
               name: this.getName(score.studentName, score.studentNameEn),
               level: score.lastLevel !== "" ? score.lastLevel : "B1-1",
               absent: score.absent,
@@ -73,6 +73,19 @@ export default {
     },
     getName(name, nameEn) {
       return enc.decryptValue(name) + "(" + nameEn + ")";
+    },
+    getSaveCommentDataRequest(targetDate) {
+      var req = { targetDate: targetDate, input: [] };
+      this.scores.forEach((item) => {
+        req.input.push({
+          studentId: item.studentId,
+          extra: {
+            teacher: enc.encryptValue(item.teacher),
+            comment: item.comment,
+          },
+        });
+      });
+      return req;
     },
   },
 };
@@ -118,7 +131,6 @@ export default {
   padding-bottom: 0px;
   font-family: "NanumSquareRound", Avenir, Helvetica, Arial, sans-serif;
   font-size: 13px;
-  text-align: center;
 }
 .v-input /deep/ #add-input {
   margin-left: 10px;

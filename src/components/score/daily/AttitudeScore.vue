@@ -46,7 +46,7 @@
           hide-details
         />
       </v-col>
-      <v-col cols="1" id=box>
+      <v-col cols="1" id="box">
         <v-checkbox hide-details v-model="score.absent" small />
       </v-col>
       <v-col cols="1">
@@ -133,6 +133,7 @@ export default {
           this.scores = [];
           response.data.targets.forEach((score) => {
             this.scores.push({
+              studentId: score.studentId,
               name: this.getName(score.studentName, score.studentNameEn),
               level_a:
                 score.lastLevel.slice(0, score.lastLevel.length - 3) !== ""
@@ -142,7 +143,7 @@ export default {
                 score.lastLevel.slice(-3, score.lastLevel.length) !== ""
                   ? score.lastLevel.slice(-3, score.lastLevel.length)
                   : "1-1",
-              absent: score.absent,
+              absent: score.absent === null ? false : score.absent,
               scoreA: score.scoreA,
               scoreH: score.scoreH,
               scoreP: score.scoreP,
@@ -153,6 +154,23 @@ export default {
     },
     getName(name, nameEn) {
       return enc.decryptValue(name) + "(" + nameEn + ")";
+    },
+    getSaveAttitudeDataRequest(targetDate) {
+      var req = { targetDate: targetDate, input: [] };
+      this.scores.forEach((item) => {
+        req.input.push({
+          studentId: item.studentId,
+          attitude: {
+            lessonLevel: item.level_a + item.level_b,
+            absent: item.absent,
+            attendance: item.scoreA,
+            homework: item.scoreH,
+            participation: item.scoreP,
+            manner: item.scoreM,
+          },
+        });
+      });
+      return req;
     },
   },
 };

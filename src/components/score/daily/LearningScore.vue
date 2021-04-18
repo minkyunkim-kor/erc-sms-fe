@@ -116,6 +116,7 @@ export default {
           this.scores = [];
           response.data.targets.forEach((score) => {
             this.scores.push({
+              studentId: score.studentId,
               name: this.getName(score.studentName, score.studentNameEn),
               level: score.lastLevel !== "" ? score.lastLevel : "B1-1",
               absent: score.absent,
@@ -131,6 +132,23 @@ export default {
     },
     getName(name, nameEn) {
       return enc.decryptValue(name) + "(" + nameEn + ")";
+    },
+    getSaveLearningDataRequest(targetDate) {
+      var req = { targetDate: targetDate, input: [] };
+      this.scores.forEach((item) => {
+        req.input.push({
+          studentId: item.studentId,
+          learning: {
+            decoding: item.scoreD,
+            fluency: item.scoreOF,
+            comprehension: item.scoreC,
+            grammar: item.scoreG,
+            writing: item.scoreW,
+            speaking: item.scoreS,
+          },
+        });
+      });
+      return req;
     },
   },
 };
