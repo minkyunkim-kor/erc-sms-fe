@@ -295,6 +295,11 @@ export default {
     clickDailyInputButton() {
       this.showDailyInputDilog = true;
     },
+    clickManualInputButton() {
+      // GET /student/score/manual 호출을 통해 학생정보 가져오기
+      // Response Object는 /student/score/target와 동일함
+      // 버튼 색깔 바꾸기 필요
+    }
   },
 };
 </script>
