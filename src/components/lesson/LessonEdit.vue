@@ -89,7 +89,9 @@
         <v-row justify="end" id="button-component">
           <v-spacer />
           <v-col cols="2">
-            <v-btn block small @click="closeDialog">취소</v-btn>
+            <v-btn id="btn-cancel" block small @click="closeDialog">
+              취소
+            </v-btn>
           </v-col>
           <v-col cols="2">
             <v-btn block small @click="removeLesson">삭제</v-btn>

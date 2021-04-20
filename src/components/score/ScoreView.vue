@@ -84,7 +84,7 @@
         </v-btn>
       </v-col>
       <v-col cols="2">
-        <v-btn id="add-btn" small block>
+        <v-btn id="manual-btn" small block @click="clickManualInputButton">
           <v-icon x-small class="mr-1">mdi-plus</v-icon>
           학생별 입력
         </v-btn>
@@ -181,6 +181,7 @@
       </template>
     </v-data-table>
     <score-daily-input :showDailyInputDilog.sync="showDailyInputDilog" />
+    <score-maunal-input :showManualDialog.sync="showManualDialog" />
   </v-container>
 </template>
 
@@ -188,9 +189,10 @@
 import axios from "axios";
 import enc from "../util/enc";
 import ScoreDailyInput from "./ScoreDailyInput";
+import ScoreMaunalInput from "./ScoreMaunalInput";
 
 export default {
-  components: { ScoreDailyInput },
+  components: { ScoreDailyInput, ScoreMaunalInput },
   created() {
     this.startDate = new Date();
     this.startDate.setMonth(this.startDate.getMonth() - 3);
@@ -215,9 +217,15 @@ export default {
         this.loadScoreData();
       }
     },
+    showManualDialog(newVal) {
+      if (!newVal) {
+        this.loadScoreData();
+      }
+    },
   },
   data: () => ({
     showDailyInputDilog: false,
+    showManualDialog: false,
     search: "",
     scoreInfo: [],
     startDateMenu: false,
@@ -296,10 +304,8 @@ export default {
       this.showDailyInputDilog = true;
     },
     clickManualInputButton() {
-      // GET /student/score/manual 호출을 통해 학생정보 가져오기
-      // Response Object는 /student/score/target와 동일함
-      // 버튼 색깔 바꾸기 필요
-    }
+      this.showManualDialog = true;
+    },
   },
 };
 </script>
@@ -320,6 +326,14 @@ export default {
   padding-left: 3%;
   padding-right: 3%;
   background-color: #00c089;
+  font-family: "NanumSquareRound", Avenir, Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  color: white;
+}
+#manual-btn {
+  padding-left: 3%;
+  padding-right: 3%;
+  background-color: grey;
   font-family: "NanumSquareRound", Avenir, Helvetica, Arial, sans-serif;
   font-size: 13px;
   color: white;

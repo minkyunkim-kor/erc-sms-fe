@@ -78,7 +78,9 @@
         <v-row id="button-component" align="end">
           <v-spacer />
           <v-col cols="2">
-            <v-btn block small @click="closeDialog">취소</v-btn>
+            <v-btn id="btn-cancel" block small @click="closeDialog">
+              취소
+            </v-btn>
           </v-col>
           <v-col cols="2" v-if="s > 1" @click="clickPrevStep">
             <v-btn block small>
@@ -98,6 +100,7 @@
         </v-row>
       </v-card-text>
     </v-card>
+    <error-popup :showDialog.sync="isError" :errorMessage="errorMessage" />
   </v-dialog>
 </template>
 
@@ -106,6 +109,7 @@ import axios from "axios";
 import AttitudeScore from "./daily/AttitudeScore";
 import LearningScore from "./daily/LearningScore";
 import ScoreComment from "./daily/ScoreComment";
+import ErrorPopup from "../popup/ErrorPopup";
 
 export default {
   props: {
@@ -120,12 +124,14 @@ export default {
       }
     },
   },
-  components: { AttitudeScore, LearningScore, ScoreComment },
+  components: { AttitudeScore, LearningScore, ScoreComment, ErrorPopup },
   data: () => ({
     dateMenu: false,
     targetDate: new Date().toISOString().substr(0, 10),
     s: 1,
     scores: [],
+    isError: false,
+    errorMessage: "",
   }),
   methods: {
     searchScoreData() {
@@ -135,11 +141,6 @@ export default {
         this.$refs.learning.loadLearningData(this.targetDate);
       } else {
         this.$refs.comment.loadCommentData(this.targetDate);
-      }
-    },
-    saveScoreData() {
-      if (this.s === 1) {
-        this.s = this.$refs.attitude.saveAttitudeData(this.targetDate);
       }
     },
     saveDate() {
@@ -167,6 +168,11 @@ export default {
         req = this.$refs.learning.getSaveLearningDataRequest(this.targetDate);
       } else {
         req = this.$refs.comment.getSaveCommentDataRequest(this.targetDate);
+      }
+      if (req.isError) {
+        this.isError = req.isError;
+        this.errorMessage = req.message + "의 점수를 확인해주세요.";
+        return;
       }
       axios
         .post("http://118.67.134.177:8080/student/score", req, {

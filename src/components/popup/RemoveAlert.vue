@@ -7,7 +7,7 @@
       </v-card-title>
       <v-card-actions>
         <v-spacer />
-        <v-btn id="action-btn" text @click="clickCancel">취소</v-btn>
+        <v-btn id="action-btn" text @click="clickCancel"></v-btn>
         <v-btn id="action-btn" text @click="clickOk">확인</v-btn>
       </v-card-actions>
     </v-card>

@@ -134,6 +134,10 @@ export default {
       return enc.decryptValue(name) + "(" + nameEn + ")";
     },
     getSaveLearningDataRequest(targetDate) {
+      var valid = this.validateLearningScore();
+      if (valid.isError) {
+        return valid;
+      }
       var req = { targetDate: targetDate, input: [] };
       this.scores.forEach((item) => {
         req.input.push({
@@ -149,6 +153,28 @@ export default {
         });
       });
       return req;
+    },
+    validateLearningScore() {
+      var result = { isError: false };
+      this.scores.forEach((score) => {
+        if (!this.scoreValidate(score.scoreD)) {
+          result = { isError: true, message: score.name };
+        } else if (!this.scoreValidate(score.scoreOF)) {
+          result = { isError: true, message: score.name };
+        } else if (!this.scoreValidate(score.scoreC)) {
+          result = { isError: true, message: score.name };
+        } else if (!this.scoreValidate(score.scoreG)) {
+          result = { isError: true, message: score.name };
+        } else if (!this.scoreValidate(score.scoreW)) {
+          result = { isError: true, message: score.name };
+        } else if (!this.scoreValidate(score.scoreS)) {
+          result = { isError: true, message: score.name };
+        }
+      });
+      return result;
+    },
+    scoreValidate(score) {
+      return score === null || (0 <= score && score <= 5);
     },
   },
 };

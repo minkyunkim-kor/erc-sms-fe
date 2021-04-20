@@ -35,6 +35,12 @@ table tbody td {
   font-size: 13px !important;
   color: white !important;
 }
+#btn-cancel {
+  background-color: #959595;
+  font-family: "NanumSquareRound", Avenir, Helvetica, Arial, sans-serif !important;
+  font-size: 13px !important;
+  color: white !important;
+}
 #title {
   font-family: "NanumSquareRound", Avenir, Helvetica, Arial, sans-serif !important;
   font-size: 16px !important;
@@ -61,6 +67,14 @@ table tbody td {
 }
 #card-upsert-title {
   background-color: #1d89e4 !important;
+  font-family: "NanumSquareRound", Avenir, Helvetica, Arial, sans-serif !important;
+  font-size: 16px !important;
+  color: white !important;
+  padding-top: 4px !important;
+  padding-bottom: 4px !important;
+}
+#card-manual-title {
+  background-color: grey !important;
   font-family: "NanumSquareRound", Avenir, Helvetica, Arial, sans-serif !important;
   font-size: 16px !important;
   color: white !important;

@@ -156,7 +156,11 @@ export default {
       return enc.decryptValue(name) + "(" + nameEn + ")";
     },
     getSaveAttitudeDataRequest(targetDate) {
-      var req = { targetDate: targetDate, input: [] };
+      var valid = this.validateAttitudeScore();
+      if (valid.isError) {
+        return valid;
+      }
+      var req = { targetDate: targetDate, input: [], isError: false };
       this.scores.forEach((item) => {
         req.input.push({
           studentId: item.studentId,
@@ -171,6 +175,24 @@ export default {
         });
       });
       return req;
+    },
+    validateAttitudeScore() {
+      var result = { isError: false };
+      this.scores.forEach((score) => {
+        if (!this.scoreValidate(score.scoreA)) {
+          result = { isError: true, message: score.name };
+        } else if (!this.scoreValidate(score.scoreH)) {
+          result = { isError: true, message: score.name };
+        } else if (!this.scoreValidate(score.scoreP)) {
+          result = { isError: true, message: score.name };
+        } else if (!this.scoreValidate(score.scoreM)) {
+          result = { isError: true, message: score.name };
+        }
+      });
+      return result;
+    },
+    scoreValidate(score) {
+      return score === null || (1 <= score && score <= 5);
     },
   },
 };
