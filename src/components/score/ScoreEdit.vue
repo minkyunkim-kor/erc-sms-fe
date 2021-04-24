@@ -1,20 +1,16 @@
 <template>
-  <v-dialog v-model="showManualDialog" persistent max-width="500px">
+  <v-dialog v-model="showEditDialog" persistent max-width="500px">
     <v-card>
-      <v-card-title id="card-manual-title">
-        학생별 평가 데이터 입력
-      </v-card-title>
+      <v-card-title id="card-edit-title">평가 데이터 수정</v-card-title>
       <v-card-text>
         <v-row id="add-component" align="end">
           <v-col cols="6">
-            <v-select
+            <v-text-field
               id="add-input"
-              prepend-icon="mdi-account"
+              prepend-icon="mdi-home-variant-outline"
               v-model="selected.name"
-              :items="names"
-              placeholder="한글이름"
+              placeholder="한글 이름"
               hide-details
-              @change="selectName"
             />
           </v-col>
           <v-col cols="3">
@@ -214,12 +210,15 @@
         </v-row>
         <v-row id="button-component" align="baseline">
           <v-spacer />
-          <v-col cols="3">
+          <v-col cols="2">
             <v-btn id="btn-cancel" block small @click="closeDialog">
               취소
             </v-btn>
           </v-col>
-          <v-col cols="3">
+          <v-col cols="2">
+            <v-btn block small @click="clickRemoveButton">삭제</v-btn>
+          </v-col>
+          <v-col cols="2">
             <v-btn id="btn-save" block small @click="clickSaveButton">
               저장
             </v-btn>
@@ -228,6 +227,13 @@
       </v-card-text>
     </v-card>
     <error-popup :showDialog.sync="isError" :errorMessage="errorMessage" />
+    <remove-alert
+      :showDialog.sync="removeDialog"
+      :confirmRemove.sync="confirmRemove"
+      component="score"
+      :target="selected.studentId"
+      :targetDate="selected.targetDate"
+    />
   </v-dialog>
 </template>
 
@@ -235,45 +241,34 @@
 import axios from "axios";
 import enc from "../util/enc";
 import ErrorPopup from "../popup/ErrorPopup";
+import RemoveAlert from "../popup/RemoveAlert";
 
 export default {
-  components: { ErrorPopup },
+  components: {
+    ErrorPopup,
+    RemoveAlert,
+  },
   props: {
-    showManualDialog: Boolean,
+    showEditDialog: Boolean,
+    selectedId: String,
+    targetDate: String,
   },
   watch: {
-    showManualDialog(newVal) {
+    showEditDialog(newVal) {
       if (newVal) {
-        this.selected = {
-          name: "",
-          level_a: "",
-          level_b: "1-1",
-          teacher: "",
-          targetDate: "",
-          scoreA: 0,
-          scoreH: 0,
-          scoreP: 0,
-          scoreM: 0,
-          scoreD: 0,
-          scoreOF: 0,
-          scoreC: 0,
-          scoreG: 0,
-          scoreW: 0,
-          scoreS: 0,
-          comment: "",
-        };
+        this.confirmRemove = false;
         this.loadManualTarget();
+      }
+    },
+    confirmRemove: function (newVal) {
+      if (newVal) {
+        this.closeDialog();
       }
     },
   },
   data: () => ({
-    details: [],
-    names: [],
     dateMenu: false,
-    selected: {
-      level_b: "1-1",
-      targetDate: "",
-    },
+    selected: {},
     level_a: ["A", "B", "C", "PR", "D", "E", "F", "G", "H", "I", "J", "K"],
     level_b: [
       "1-1",
@@ -295,52 +290,70 @@ export default {
     ],
     isError: false,
     errorMessage: "",
+    removeDialog: false,
+    confirmRemove: false,
   }),
   methods: {
     saveTargetDate(date) {
       this.$refs.dateMenu.save(date);
     },
     closeDialog() {
-      this.$emit("update:showManualDialog", false);
+      this.$emit("update:showEditDialog", false);
     },
     loadManualTarget() {
       axios
-        .get("http://118.67.134.177:8080/student/score/manual", {
-          headers: {
-            Authorization: "Bearer " + this.$store.state.token,
-            "erc-user-id": this.$store.state.uid,
-          },
-        })
+        .get(
+          "http://118.67.134.177:8080/student/" +
+            this.selectedId +
+            "/score?targetDate=" +
+            this.targetDate,
+          {
+            headers: {
+              Authorization: "Bearer " + this.$store.state.token,
+              "erc-user-id": this.$store.state.uid,
+            },
+          }
+        )
         .then((response) => {
-          response.data.targets.forEach((target) => {
-            this.details.push({
-              id: target.studentId,
-              name: enc.decryptValue(target.studentName),
-              level_a:
-                target.lastLevel.slice(0, target.lastLevel.length - 3) !== ""
-                  ? target.lastLevel.slice(0, target.lastLevel.length - 3)
-                  : "",
-              level_b:
-                target.lastLevel.slice(-3, target.lastLevel.length) !== ""
-                  ? target.lastLevel.slice(-3, target.lastLevel.length)
-                  : "1-1",
-              teacher: enc.decryptValue(target.teacher),
-            });
-            this.names.push(enc.decryptValue(target.studentName));
-          });
+          this.selected = {
+            studentId: response.data.studentId,
+            studentScoreId: response.data.studentScoreId,
+            name: enc.decryptValue(response.data.name),
+            targetDate: response.data.lessonDate,
+            level_a:
+              response.data.lessonLevel.slice(
+                0,
+                response.data.lessonLevel.length - 3
+              ) !== ""
+                ? response.data.lessonLevel.slice(
+                    0,
+                    response.data.lessonLevel.length - 3
+                  )
+                : "",
+            level_b:
+              response.data.lessonLevel.slice(
+                -3,
+                response.data.lessonLevel.length
+              ) !== ""
+                ? response.data.lessonLevel.slice(
+                    -3,
+                    response.data.lessonLevel.length
+                  )
+                : "1-1",
+            scoreA: response.data.scoreA,
+            scoreH: response.data.scoreH,
+            scoreP: response.data.scoreP,
+            scoreM: response.data.scoreM,
+            scoreD: response.data.scoreD,
+            scoreOF: response.data.scoreOF,
+            scoreC: response.data.scoreC,
+            scoreG: response.data.scoreG,
+            scoreW: response.data.scoreW,
+            scoreS: response.data.scoreS,
+            teacher: enc.decryptValue(response.data.teacher),
+            comment: response.data.comment,
+          };
         });
-    },
-    selectName(item) {
-      var selectIndex = this.details.findIndex(
-        (detail) => detail.name === item
-      );
-      this.selected = {
-        id: this.details[selectIndex].id,
-        name: this.details[selectIndex].name,
-        level_a: this.details[selectIndex].level_a,
-        level_b: this.details[selectIndex].level_b,
-        teacher: this.details[selectIndex].teacher,
-      };
     },
     validateData() {
       if (this.selected.targetDate === null) {
@@ -408,7 +421,7 @@ export default {
             targetDate: this.selected.targetDate,
             input: [
               {
-                studentId: this.selected.id,
+                studentId: this.selected.studentId,
                 attitude: {
                   lessonLevel: this.selected.level_a + this.selected.level_b,
                   absent: false,
@@ -440,6 +453,9 @@ export default {
           }
         )
         .then(() => this.closeDialog());
+    },
+    clickRemoveButton() {
+      this.removeDialog = true;
     },
   },
 };

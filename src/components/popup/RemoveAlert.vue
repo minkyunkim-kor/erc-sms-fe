@@ -7,7 +7,7 @@
       </v-card-title>
       <v-card-actions>
         <v-spacer />
-        <v-btn id="action-btn" text @click="clickCancel"></v-btn>
+        <v-btn id="action-btn" text @click="clickCancel">취소</v-btn>
         <v-btn id="action-btn" text @click="clickOk">확인</v-btn>
       </v-card-actions>
     </v-card>
@@ -35,26 +35,50 @@ export default {
       type: String,
       default: "",
     },
+    targetDate: {
+      type: String,
+      default: "",
+    },
   },
   methods: {
     clickCancel() {
       this.$emit("update:showDialog", false);
     },
     clickOk() {
-      axios
-        .delete(
-          "http://118.67.134.177:8080/" + this.component + "/" + this.target,
-          {
-            headers: {
-              Authorization: "Bearer " + this.$store.state.token,
-              "erc-user-id": this.$store.state.uid,
-            },
-          }
-        )
-        .then(() => {
-          this.$emit("update:showDialog", false);
-          this.$emit("update:confirmRemove", true);
-        });
+      if (this.component !== "score") {
+        axios
+          .delete(
+            "http://118.67.134.177:8080/" + this.component + "/" + this.target,
+            {
+              headers: {
+                Authorization: "Bearer " + this.$store.state.token,
+                "erc-user-id": this.$store.state.uid,
+              },
+            }
+          )
+          .then(() => {
+            this.$emit("update:showDialog", false);
+            this.$emit("update:confirmRemove", true);
+          });
+      } else {
+        axios
+          .delete(
+            "http://118.67.134.177:8080/student/score?studentId=" +
+              this.target +
+              "&targetDate=" +
+              this.targetDate,
+            {
+              headers: {
+                Authorization: "Bearer " + this.$store.state.token,
+                "erc-user-id": this.$store.state.uid,
+              },
+            }
+          )
+          .then(() => {
+            this.$emit("update:showDialog", false);
+            this.$emit("update:confirmRemove", true);
+          });
+      }
     },
   },
 };

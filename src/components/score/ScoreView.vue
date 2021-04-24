@@ -95,6 +95,7 @@
       :items="scoreInfo"
       :search="search"
       disable-sort
+      @dblclick:row="dblClickItem"
     >
       <template v-slot:no-data>
         <p id="no-data">해당 기간에 입력된 평가데이터가 없습니다.</p>
@@ -182,6 +183,11 @@
     </v-data-table>
     <score-daily-input :showDailyInputDilog.sync="showDailyInputDilog" />
     <score-maunal-input :showManualDialog.sync="showManualDialog" />
+    <score-edit
+      :showEditDialog.sync="showEditDialog"
+      :selectedId="selectedItem.id"
+      :targetDate="selectedItem.date"
+    />
   </v-container>
 </template>
 
@@ -190,9 +196,10 @@ import axios from "axios";
 import enc from "../util/enc";
 import ScoreDailyInput from "./ScoreDailyInput";
 import ScoreMaunalInput from "./ScoreMaunalInput";
+import ScoreEdit from "./ScoreEdit";
 
 export default {
-  components: { ScoreDailyInput, ScoreMaunalInput },
+  components: { ScoreDailyInput, ScoreMaunalInput, ScoreEdit },
   created() {
     this.startDate = new Date();
     this.startDate.setMonth(this.startDate.getMonth() - 3);
@@ -222,10 +229,17 @@ export default {
         this.loadScoreData();
       }
     },
+    showEditDialog(newVal) {
+      if (!newVal) {
+        this.loadScoreData();
+      }
+    },
   },
   data: () => ({
     showDailyInputDilog: false,
     showManualDialog: false,
+    showEditDialog: false,
+    selectedItem: {},
     search: "",
     scoreInfo: [],
     startDateMenu: false,
@@ -296,6 +310,7 @@ export default {
                   ? enc.decryptValue(score.teacher)
                   : "",
             });
+            this.$forceUpdate();
           });
           this.$store.state.scoreInfo = this.scoreInfo;
         });
@@ -305,6 +320,13 @@ export default {
     },
     clickManualInputButton() {
       this.showManualDialog = true;
+    },
+    dblClickItem(item, select) {
+      this.selectedItem = {
+        id: select.item.studentId,
+        date: select.item.lessonDate,
+      };
+      this.showEditDialog = true;
     },
   },
 };

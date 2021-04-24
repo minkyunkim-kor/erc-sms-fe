@@ -151,16 +151,15 @@ export default {
       this.$emit("update:showDailyInputDilog", false);
     },
     clickNextStep() {
-      this.callSaveScoreRequest(true);
+      this.callSaveScoreRequest(true, false);
     },
     clickPrevStep() {
-      this.callSaveScoreRequest(false);
+      this.callSaveScoreRequest(false, false);
     },
     clickSaveButton() {
-      this.clickNextStep();
-      this.$emit("update:showDailyInputDilog", false);
+      this.callSaveScoreRequest(true, true);
     },
-    callSaveScoreRequest(isNext) {
+    callSaveScoreRequest(isNext, isFinish) {
       var req = {};
       if (this.s === 1) {
         req = this.$refs.attitude.getSaveAttitudeDataRequest(this.targetDate);
@@ -184,7 +183,8 @@ export default {
         .then(() => {
           if (isNext) this.s++;
           else this.s--;
-          this.searchScoreData();
+          if (isFinish) this.$emit("update:showDailyInputDilog", false);
+          else this.searchScoreData();
         });
     },
   },
