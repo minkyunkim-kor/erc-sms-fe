@@ -17,7 +17,7 @@
       <v-col cols="2">
         <p id="report-label" style="text-align: end">Date :</p>
       </v-col>
-      <v-col cols="3">
+      <v-col cols="2">
         <v-text-field hide-details readonly class="pt-0 mt-0" />
       </v-col>
     </v-row>

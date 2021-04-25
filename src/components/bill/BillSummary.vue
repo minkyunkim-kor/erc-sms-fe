@@ -134,6 +134,7 @@ export default {
           },
         },
       },
+      tooltip: { x: { format: "yyyy-MM" } },
       fill: { opacity: 1 },
     },
   }),
