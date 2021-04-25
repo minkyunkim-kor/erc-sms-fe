@@ -8,6 +8,7 @@ import StudentSummary from "../views/users/StudentSummary";
 import TestLevel from "../views/users/LevelTest";
 import Score from "../views/users/Score";
 import Bill from "../views/users/Bill";
+import BillSummary from "../views/users/BillSummary";
 import Report from "../views/users/Report";
 import CashReceipt from "../views/users/CashReceipt";
 import Unpaid from "../views/users/Unpaid";
@@ -28,6 +29,7 @@ const routes = [
       { path: "score", name: "score", component: Score },
       { path: "report", name: "report", component: Report },
       { path: "bill", name: "bill", component: Bill },
+      { path: "billSummary", name: "billSummary", component: BillSummary },
       { path: "cashReceipt", name: "cashReceipt", component: CashReceipt },
       { path: "unpaid", name: "unpaid", component: Unpaid },
     ],

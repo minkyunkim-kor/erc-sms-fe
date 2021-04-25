@@ -84,7 +84,7 @@ export default {
     billMenu: [
       { title: "수납현황", to: "/users/bill" },
       { title: "미납금 현황", to: "/users/unpaid" },
-      { title: "매출 현황", to: "/users" },
+      { title: "매출 현황", to: "/users/billSummary" },
       { title: "현금영수증 정보", to: "/users/cashReceipt" },
     ],
     barColor: "#f4f6f9",

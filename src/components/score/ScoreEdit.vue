@@ -7,7 +7,7 @@
           <v-col cols="6">
             <v-text-field
               id="add-input"
-              prepend-icon="mdi-home-variant-outline"
+              prepend-icon="mdi-account"
               v-model="selected.name"
               placeholder="한글 이름"
               hide-details

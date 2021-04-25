@@ -4,8 +4,7 @@
       <v-col cols="2" class="pt-0 pb-2">
         <p id="title">미납금 현황</p>
       </v-col>
-    </v-row>
-    <v-row align="baseline" justify="space-between">
+      <v-spacer />
       <v-col cols="2">
         <v-select
           id="add-input"
