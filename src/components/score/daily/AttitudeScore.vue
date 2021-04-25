@@ -1,33 +1,33 @@
 <template>
   <v-sheet height="350px" id="scroll">
     <v-row id="header">
-      <v-col cols="3">
+      <v-col cols="20p">
         <p id="h-label">이름</p>
       </v-col>
-      <v-col cols="4">
+      <v-col cols="20p">
         <p id="h-label">레벨</p>
       </v-col>
-      <v-col cols="1">
+      <v-col cols="12p">
         <p id="h-label">결석</p>
       </v-col>
-      <v-col cols="1">
+      <v-col cols="12p">
         <p id="h-label">A</p>
       </v-col>
-      <v-col cols="1">
+      <v-col cols="12p">
         <p id="h-label">H</p>
       </v-col>
-      <v-col cols="1">
+      <v-col cols="12p">
         <p id="h-label">P</p>
       </v-col>
-      <v-col cols="1">
+      <v-col cols="12p">
         <p id="h-label">M</p>
       </v-col>
     </v-row>
     <v-row v-for="(score, i) in scores" :key="i" align="end">
-      <v-col cols="3" id="item">
+      <v-col cols="20p" id="item">
         <p id="label">{{ score.name }}</p>
       </v-col>
-      <v-col cols="2" id="select">
+      <v-col cols="10p" id="select">
         <v-select
           id="add-input"
           :items="level_a"
@@ -37,7 +37,7 @@
           hide-details
         />
       </v-col>
-      <v-col cols="2" id="select">
+      <v-col cols="10p" id="select">
         <v-select
           id="add-input"
           :items="level_b"
@@ -46,10 +46,10 @@
           hide-details
         />
       </v-col>
-      <v-col cols="1" id="box">
+      <v-col cols="12p" id="box">
         <v-checkbox hide-details v-model="score.absent" small />
       </v-col>
-      <v-col cols="1">
+      <v-col cols="12p">
         <v-text-field
           id="score-input"
           hide-details
@@ -58,7 +58,7 @@
           v-model="score.scoreA"
         />
       </v-col>
-      <v-col cols="1">
+      <v-col cols="12p">
         <v-text-field
           id="score-input"
           hide-details
@@ -67,7 +67,7 @@
           v-model="score.scoreH"
         />
       </v-col>
-      <v-col cols="1">
+      <v-col cols="12p">
         <v-text-field
           id="score-input"
           hide-details
@@ -76,7 +76,7 @@
           v-model="score.scoreP"
         />
       </v-col>
-      <v-col cols="1">
+      <v-col cols="12p">
         <v-text-field
           id="score-input"
           hide-details
@@ -224,6 +224,8 @@ export default {
 #select {
   padding-top: 6px;
   padding-bottom: 6px;
+  padding-right: 4px;
+  padding-left: 4px;
 }
 #label {
   font-family: "NanumSquareRound", sans-serif;
@@ -281,5 +283,17 @@ export default {
 .v-input >>> input::-webkit-inner-spin-button {
   /* Text Field Number 항목 arrow 버튼 제거 */
   -webkit-appearance: none;
+}
+.col-10p {
+  flex: 0 0 10%;
+  max-width: 10%;
+}
+.col-12p {
+  flex: 0 0 12%;
+  max-width: 12%;
+}
+.col-20p {
+  flex: 0 0 20%;
+  max-width: 20%;
 }
 </style>

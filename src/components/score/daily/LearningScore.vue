@@ -1,39 +1,39 @@
 <template>
   <v-sheet height="350px" id="scroll">
     <v-row id="header">
-      <v-col cols="3">
+      <v-col cols="20p">
         <p id="h-label">이름</p>
       </v-col>
-      <v-col cols="3">
+      <v-col cols="20p">
         <p id="h-label">레벨</p>
       </v-col>
-      <v-col cols="1">
+      <v-col cols="10p">
         <p id="h-label">D</p>
       </v-col>
-      <v-col cols="1">
+      <v-col cols="10p">
         <p id="h-label">OF</p>
       </v-col>
-      <v-col cols="1">
+      <v-col cols="10p">
         <p id="h-label">C</p>
       </v-col>
-      <v-col cols="1">
+      <v-col cols="10p">
         <p id="h-label">G</p>
       </v-col>
-      <v-col cols="1">
+      <v-col cols="10p">
         <p id="h-label">W</p>
       </v-col>
-      <v-col cols="1">
+      <v-col cols="10p">
         <p id="h-label">S</p>
       </v-col>
     </v-row>
     <v-row v-for="(score, i) in scores" :key="i" align="end" height="56px">
-      <v-col cols="3" id="item">
+      <v-col cols="20p" id="item">
         <p id="label">{{ score.name }}</p>
       </v-col>
-      <v-col cols="3" id="item">
+      <v-col cols="20p" id="item">
         <p id="label">{{ score.level }}</p>
       </v-col>
-      <v-col cols="1">
+      <v-col cols="10p">
         <v-text-field
           id="score-input"
           hide-details
@@ -42,7 +42,7 @@
           v-model="score.scoreD"
         />
       </v-col>
-      <v-col cols="1">
+      <v-col cols="10p">
         <v-text-field
           id="score-input"
           hide-details
@@ -51,7 +51,7 @@
           v-model="score.scoreOF"
         />
       </v-col>
-      <v-col cols="1">
+      <v-col cols="10p">
         <v-text-field
           id="score-input"
           hide-details
@@ -60,7 +60,7 @@
           v-model="score.scoreC"
         />
       </v-col>
-      <v-col cols="1">
+      <v-col cols="10p">
         <v-text-field
           id="score-input"
           hide-details
@@ -69,7 +69,7 @@
           v-model="score.scoreG"
         />
       </v-col>
-      <v-col cols="1">
+      <v-col cols="10p">
         <v-text-field
           id="score-input"
           hide-details
@@ -78,7 +78,7 @@
           v-model="score.scoreW"
         />
       </v-col>
-      <v-col cols="1">
+      <v-col cols="10p">
         <v-text-field
           id="score-input"
           hide-details
@@ -256,5 +256,13 @@ export default {
 .v-input >>> input::-webkit-inner-spin-button {
   /* Text Field Number 항목 arrow 버튼 제거 */
   -webkit-appearance: none;
+}
+.col-10p {
+  flex: 0 0 10%;
+  max-width: 10%;
+}
+.col-20p {
+  flex: 0 0 20%;
+  max-width: 20%;
 }
 </style>

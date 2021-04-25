@@ -1,27 +1,27 @@
 <template>
   <v-sheet height="350px" id="scroll">
     <v-row id="header">
-      <v-col cols="3">
+      <v-col cols="20p">
         <p id="h-label">이름</p>
       </v-col>
-      <v-col cols="2">
+      <v-col cols="20p">
         <p id="h-label">레벨</p>
       </v-col>
-      <v-col cols="5">
+      <v-col cols="40p">
         <p id="h-label">COMMENT</p>
       </v-col>
-      <v-col cols="2">
+      <v-col cols="20p">
         <p id="h-label">담당 선생님</p>
       </v-col>
     </v-row>
     <v-row v-for="(score, i) in scores" :key="i" align="end">
-      <v-col cols="3" id="item">
+      <v-col cols="20p" id="item">
         <p id="label">{{ score.name }}</p>
       </v-col>
-      <v-col cols="2" id="item">
+      <v-col cols="20p" id="item">
         <p id="label">{{ score.level }}</p>
       </v-col>
-      <v-col cols="5">
+      <v-col cols="40p">
         <v-text-field
           id="score-input"
           hide-details
@@ -29,7 +29,7 @@
           v-model="score.comment"
         />
       </v-col>
-      <v-col cols="2" id="item">
+      <v-col cols="20p" id="item">
         <p id="label">{{ score.teacher }}</p>
       </v-col>
     </v-row>
@@ -172,5 +172,13 @@ export default {
   font-family: "NanumSquareRound", Avenir, Helvetica, Arial, sans-serif;
   font-size: 13px;
   text-align: start;
+}
+.col-20p {
+  flex: 0 0 20%;
+  max-width: 20%;
+}
+.col-40p {
+  flex: 0 0 40%;
+  max-width: 40%;
 }
 </style>
