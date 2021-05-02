@@ -92,7 +92,13 @@
         </v-btn>
       </v-col>
     </v-row>
-    <report-detail-view />
+    <div ref="target">
+      <report-detail-view
+        class="pt-4"
+        :details.sync="reportResult"
+        :barWidth.sync="barWidth"
+      />
+    </div>
   </v-container>
 </template>
 
@@ -100,9 +106,12 @@
 import axios from "axios";
 import enc from "../util/enc";
 import ReportDetailView from "./ReportDetailView";
+import html2pdf from "html2pdf.js";
 
 export default {
-  components: { ReportDetailView },
+  components: {
+    ReportDetailView,
+  },
   created() {
     this.loadStudentNames();
   },
@@ -114,7 +123,25 @@ export default {
     startDate: "",
     endDateMenu: false,
     endDate: "",
-    filename: "sample.pdf",
+    reportResult: {
+      nameKorean: "",
+      nameEnglish: "",
+      grade: "",
+      level: "",
+    },
+    options: {
+      filename: "sample.pdf",
+      image: { type: "jpeg", quality: 1 },
+      html2canvas: {
+        scrollY: 30,
+        dpi: 300,
+        letterRendering: true,
+        useCORS: true,
+        scale: 1,
+      },
+      jspdf: { unit: "mm", format: "a4", compressPDF: true },
+    },
+    barWidth: "100%",
   }),
   methods: {
     loadStudentNames() {
@@ -181,6 +208,8 @@ export default {
             averageG: res.data.averageG,
             averageW: res.data.averageW,
             averageS: res.data.averageS,
+            startDate: this.startDate,
+            endDate: this.endDate,
           };
           this.filename =
             "Report_" +
@@ -188,12 +217,29 @@ export default {
             "_" +
             this.startDate +
             "_" +
-            this.endDate;
-          console.log(this.reportResult);
+            this.endDate +
+            ".pdf";
         });
     },
     exportReport() {
-      // this.$refs.target.generatePdf();
+      html2pdf(this.$refs.target, {
+        margin: 15,
+        filename: this.filename,
+        image: { type: "jpeg", quality: 1 },
+        html2canvas: {
+          width: 1200,
+          height: 1696,
+          scale: 4,
+          dpi: 300,
+          y: -30,
+          letterRendering: true,
+        },
+        jsPDF: {
+          unit: "mm",
+          format: "a4",
+          compreePDF: true,
+        },
+      });
     },
   },
 };
