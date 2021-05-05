@@ -92,13 +92,29 @@
         </v-btn>
       </v-col>
     </v-row>
-    <div ref="target">
-      <report-detail-view
-        class="pt-4"
-        :details.sync="reportResult"
-        :barWidth.sync="barWidth"
-      />
-    </div>
+    <report-detail-view class="pt-4" :details.sync="reportResult" />
+    <vue-html2pdf
+      :show-layout="false"
+      :float-layout="true"
+      :enable-download="true"
+      :preview-modal="false"
+      :paginate-elements-by-height="2200"
+      :filename="options.filename"
+      :pdf-quality="2"
+      :manual-pagination="false"
+      pdf-format="a4"
+      pdf-orientation="landscape"
+      pdf-content-width="1200px"
+      :html-to-pdf-options="options"
+      @progress="onProgress($event)"
+      @hasStartedGeneration="hasStartedGeneration()"
+      @hasGenerated="hasGenerated($event)"
+      ref="target"
+    >
+      <section slot="pdf-content">
+        <report-pdf-view :details.sync="reportResult" />
+      </section>
+    </vue-html2pdf>
   </v-container>
 </template>
 
@@ -106,11 +122,14 @@
 import axios from "axios";
 import enc from "../util/enc";
 import ReportDetailView from "./ReportDetailView";
-import html2pdf from "html2pdf.js";
+import ReportPdfView from "./ReportPdfView";
+import VueHtml2pdf from "vue-html2pdf";
 
 export default {
   components: {
     ReportDetailView,
+    ReportPdfView,
+    VueHtml2pdf,
   },
   created() {
     this.loadStudentNames();
@@ -131,17 +150,22 @@ export default {
     },
     options: {
       filename: "sample.pdf",
+      margin: 1,
       image: { type: "jpeg", quality: 1 },
       html2canvas: {
-        scrollY: 30,
+        width: 1200,
+        height: 1696,
+        scale: 4,
         dpi: 300,
+        y: -25,
         letterRendering: true,
-        useCORS: true,
-        scale: 1,
       },
-      jspdf: { unit: "mm", format: "a4", compressPDF: true },
+      jsPDF: {
+        unit: "mm",
+        format: "a4",
+        compreePDF: true,
+      },
     },
-    barWidth: "100%",
   }),
   methods: {
     loadStudentNames() {
@@ -211,7 +235,7 @@ export default {
             startDate: this.startDate,
             endDate: this.endDate,
           };
-          this.filename =
+          this.options.filename =
             "Report_" +
             this.reportResult.nameKorean +
             "_" +
@@ -222,24 +246,7 @@ export default {
         });
     },
     exportReport() {
-      html2pdf(this.$refs.target, {
-        margin: 15,
-        filename: this.filename,
-        image: { type: "jpeg", quality: 1 },
-        html2canvas: {
-          width: 1200,
-          height: 1696,
-          scale: 4,
-          dpi: 300,
-          y: -30,
-          letterRendering: true,
-        },
-        jsPDF: {
-          unit: "mm",
-          format: "a4",
-          compreePDF: true,
-        },
-      });
+      this.$refs.target.generatePdf();
     },
   },
 };

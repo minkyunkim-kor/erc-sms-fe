@@ -1,15 +1,16 @@
 <template>
-  <div>
-    <v-row id="header-and-footer" align="center" justify="space-between">
-      <v-col cols="6">
+  <div style="width: 1180px">
+    <v-row id="header-and-footer" align="center">
+      <v-col cols="90p">
         <p id="report-title">Monthly Report</p>
       </v-col>
-      <v-spacer />
-      <v-col cols="1">
-        <v-img src="../../assets/logo_2.png" />
+      <v-col cols="10p">
+        <img src="../../assets/logo_2.png" width="80px" />
       </v-col>
     </v-row>
     <v-row>
+      <br />
+      <br />
       <br />
     </v-row>
     <v-row>
@@ -58,6 +59,8 @@
       <v-col cols="1" />
     </v-row>
     <v-row>
+      <br />
+      <br />
       <br />
     </v-row>
     <v-row>
@@ -108,6 +111,8 @@
     </v-row>
     <v-row>
       <br />
+      <br />
+      <br />
     </v-row>
     <v-row>
       <v-col cols="1" />
@@ -137,6 +142,8 @@
     </v-row>
     <v-row>
       <br />
+      <br />
+      <br />
     </v-row>
     <v-row>
       <v-col cols="1" />
@@ -163,6 +170,8 @@
       <v-col cols="1" />
     </v-row>
     <v-row>
+      <br />
+      <br />
       <br />
     </v-row>
     <v-row id="header-and-footer" style="margin-top: 50px">
@@ -285,7 +294,7 @@ export default {
 }
 #report-title {
   font-family: "NanumSquareRound", sans-serif;
-  font-size: 20px;
+  font-size: 30px;
   font-weight: 800;
   margin-bottom: 0px;
   margin-left: 10px;
@@ -339,5 +348,13 @@ export default {
 #chart-table-chart {
   border: 1px solid #bfbfbf !important;
   border-collapse: collapse;
+}
+.col-10p {
+  flex: 0 0 10%;
+  max-width: 10%;
+}
+.col-90p {
+  flex: 0 0 90%;
+  max-width: 90%;
 }
 </style>

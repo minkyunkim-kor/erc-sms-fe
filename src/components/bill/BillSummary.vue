@@ -32,26 +32,88 @@
           </v-col>
         </v-row>
         <v-row align="start" justify="center">
-          <v-col cols="6">
-            <div id="area">
+          <v-col cols="8">
+            <div id="line">
               <apexchart
-                ref="areaChart"
-                height="400px"
-                :options="areaOptions"
-                :series="areaSeries"
+                ref="lineChart"
+                height="300px"
+                :options="lineOptions"
+                :series="lineSeries"
               />
             </div>
           </v-col>
-          <v-col cols="6">
+          <v-col cols="4">
             <div id="stack">
               <apexchart
                 ref="stackChart"
-                height="400px"
+                height="300px"
                 :options="stackedOptions"
                 :series="stackedSeries"
               />
             </div>
           </v-col>
+        </v-row>
+      </v-card-text>
+    </v-card>
+    <v-row>
+      <br />
+      <br />
+    </v-row>
+    <v-card>
+      <v-card-text>
+        <v-row>
+          <table id="summary-table">
+            <thead id="summary-content">
+              <tr>
+                <th colspan="2">항목</th>
+                <th v-for="(name, i) in headers" :key="i">
+                  {{ name }}
+                </th>
+              </tr>
+            </thead>
+            <tbody id="summary-content">
+              <tr>
+                <td rowspan="3" width="34px" style="background-color: #f2f2f2">
+                  매출
+                </td>
+                <td width="50px" style="background-color: #f2f2f2">수강료</td>
+                <td v-for="(detail, i) in details" :key="i" width="74px">
+                  {{ currencyFormat(detail.tuition) }}
+                </td>
+              </tr>
+              <tr>
+                <td style="background-color: #f2f2f2">교재비</td>
+                <td v-for="(detail, i) in details" :key="i">
+                  {{ currencyFormat(detail.bookPrice) }}
+                </td>
+              </tr>
+              <tr>
+                <td style="background-color: #f2f2f2">합계</td>
+                <td v-for="(detail, i) in details" :key="i">
+                  {{ currencyFormat(detail.sum) }}
+                </td>
+              </tr>
+              <tr>
+                <td rowspan="2" style="background-color: #f2f2f2">수납</td>
+                <td style="background-color: #f2f2f2">카드</td>
+                <td v-for="(detail, i) in details" :key="i">
+                  {{ currencyFormat(detail.card) }}
+                </td>
+              </tr>
+              <tr>
+                <td style="background-color: #f2f2f2">현금</td>
+                <td v-for="(detail, i) in details" :key="i">
+                  {{ currencyFormat(detail.cash) }}
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2" style="background-color: #f2f2f2">미납금</td>
+                <td v-for="(detail, i) in details" :key="i">
+                  {{ currencyFormat(detail.unpaid) }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </v-row>
       </v-card-text>
     </v-card>
@@ -73,24 +135,15 @@ export default {
       card: 0,
       cash: 0,
     },
-    areaSeries: [
-      {
-        name: "총 매출",
-        data: [],
-      },
-      {
-        name: "수강료",
-        data: [],
-      },
-      {
-        name: "교재비",
-        data: [],
-      },
+    lineSeries: [
+      { name: "매출 합계", data: [] },
+      { name: "미납금", data: [] },
     ],
-    areaOptions: {
-      chart: { type: "area", zoom: { enabled: false } },
+    lineOptions: {
+      chart: { type: "line", zoom: { enabled: false } },
       dataLabels: { enabled: false },
-      stroke: { curve: "smooth" },
+      stroke: { curve: "straight" },
+      colors: ["#1D89E4", "#EE534F"],
       xaxis: {
         categories: [],
         type: "datetime",
@@ -101,7 +154,6 @@ export default {
         },
       },
       tooltip: { x: { format: "yyyy-MM" } },
-      fill: { type: "solid" },
     },
     stackedSeries: [
       {
@@ -137,6 +189,21 @@ export default {
       tooltip: { x: { format: "yyyy-MM" } },
       fill: { opacity: 1 },
     },
+    headers: [
+      "1월",
+      "2월",
+      "3월",
+      "4월",
+      "5월",
+      "6월",
+      "7월",
+      "8월",
+      "9월",
+      "10월",
+      "11월",
+      "12월",
+    ],
+    details: [],
   }),
   computed: {
     years: {
@@ -153,16 +220,16 @@ export default {
   },
   methods: {
     getSummaryInfo() {
-      this.areaOptions.xaxis.categories.length = 0;
+      this.lineOptions.xaxis.categories.length = 0;
       this.stackedOptions.xaxis.categories.length = 0;
       this.summaries.total = 0;
       this.summaries.card = 0;
       this.summaries.cash = 0;
-      this.areaSeries[0].data.length = 0;
-      this.areaSeries[1].data.length = 0;
-      this.areaSeries[2].data.length = 0;
+      this.lineSeries[0].data.length = 0;
+      this.lineSeries[1].data.length = 0;
       this.stackedSeries[0].data.length = 0;
       this.stackedSeries[1].data.length = 0;
+      this.details.length = 0;
       axios
         .get(
           "http://118.67.134.177:8080/bill/summary?targetYear=" +
@@ -176,7 +243,7 @@ export default {
         )
         .then((response) => {
           response.data.summaries.forEach((item) => {
-            this.areaOptions.xaxis.categories.push(
+            this.lineOptions.xaxis.categories.push(
               this.targetYear + "-" + this.pad(item.month, 2)
             );
             this.stackedOptions.xaxis.categories.push(
@@ -185,13 +252,24 @@ export default {
             this.summaries.total += Number(item.deposit);
             this.summaries.card += Number(item.card);
             this.summaries.cash += Number(item.cash);
-            this.areaSeries[0].data.push(item.deposit);
-            this.areaSeries[1].data.push(item.tuition);
-            this.areaSeries[2].data.push(item.bookPrice);
+            this.lineSeries[0].data.push(item.deposit);
+            var unpaid =
+              Number(item.tuition) +
+              Number(item.bookPrice) -
+              Number(item.deposit);
+            this.lineSeries[1].data.push(unpaid);
             this.stackedSeries[0].data.push(item.card);
             this.stackedSeries[1].data.push(item.cash);
+            this.details.push({
+              tuition: item.tuition,
+              bookPrice: item.bookPrice,
+              sum: Number(item.tuition) + Number(item.bookPrice),
+              card: item.card,
+              cash: item.cash,
+              unpaid: unpaid,
+            });
           });
-          this.$refs.areaChart.updateSeries(this.areaSeries);
+          this.$refs.lineChart.updateSeries(this.lineSeries);
           this.$refs.stackChart.updateSeries(this.stackedSeries);
         });
     },
@@ -243,5 +321,28 @@ export default {
 .v-select-list /deep/ .v-list-item__title {
   font-family: "NanumSquareRound", Avenir, Helvetica, Arial, sans-serif !important;
   font-size: 13px !important;
+}
+#summary-table {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 10px;
+  margin-right: 10px;
+  border: 1px solid black;
+  border-collapse: collapse;
+  width: 100%;
+}
+#summary-content {
+  font-family: "NanumSquareRound", Avenir, Helvetica, Arial, sans-serif;
+  font-size: 10px;
+  text-align: center;
+}
+#summary-content th {
+  background-color: #d9d9d9;
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+#summary-content td {
+  border: 1px solid black;
+  border-collapse: collapse;
 }
 </style>
