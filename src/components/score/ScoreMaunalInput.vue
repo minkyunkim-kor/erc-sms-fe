@@ -305,7 +305,7 @@ export default {
     },
     loadManualTarget() {
       axios
-        .get("http://118.67.134.177:8080/student/score/manual", {
+        .get("http://49.50.174.126:8080/student/score/manual", {
           headers: {
             Authorization: "Bearer " + this.$store.state.token,
             "erc-user-id": this.$store.state.uid,
@@ -403,7 +403,7 @@ export default {
       }
       axios
         .post(
-          "http://118.67.134.177:8080/student/score",
+          "http://49.50.174.126:8080/student/score",
           {
             targetDate: this.selected.targetDate,
             input: [

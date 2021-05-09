@@ -55,7 +55,7 @@ export default {
     loadCashReceiptInfo() {
       this.cashReceipts.length = 0;
       axios
-        .get("http://118.67.134.177:8080/bill/cashReceipt", {
+        .get("http://49.50.174.126:8080/bill/cashReceipt", {
           headers: {
             Authorization: "Bearer " + this.$store.state.token,
             "erc-user-id": this.$store.state.uid,

@@ -152,7 +152,7 @@ export default {
   methods: {
     loadSummaryData() {
       axios
-        .get("http://118.67.134.177:8080/student/summary", {
+        .get("http://49.50.174.126:8080/student/summary", {
           headers: {
             Authorization: "Bearer " + this.$store.state.token,
             "erc-user-id": this.$store.state.uid,

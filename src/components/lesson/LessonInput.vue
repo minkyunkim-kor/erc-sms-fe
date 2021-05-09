@@ -152,7 +152,7 @@ export default {
       }
       axios
         .post(
-          "http://118.67.134.177:8080/lesson",
+          "http://49.50.174.126:8080/lesson",
           {
             name: this.name,
             teacherName: enc.encryptValue(this.teacherName),

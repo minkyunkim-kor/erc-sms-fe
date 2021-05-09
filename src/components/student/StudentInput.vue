@@ -217,7 +217,7 @@ export default {
       }
       axios
         .post(
-          "http://118.67.134.177:8080/student",
+          "http://49.50.174.126:8080/student",
           {
             category: this.detail.category,
             registeredDate: this.detail.registeredDate,

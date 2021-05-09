@@ -194,7 +194,7 @@ export default {
     loadBillData() {
       axios
         .get(
-          "http://118.67.134.177:8080/bill/" +
+          "http://49.50.174.126:8080/bill/" +
             this.target +
             "?targetMonth=" +
             this.targetMonth,
@@ -233,7 +233,7 @@ export default {
       }
       axios
         .post(
-          "http://118.67.134.177:8080/bill/payment",
+          "http://49.50.174.126:8080/bill/payment",
           {
             studentId: this.target,
             targetMonth: this.targetMonth,

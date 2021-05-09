@@ -85,7 +85,7 @@ export default {
     loadCashReceiptInfo() {
       axios
         .get(
-          "http://118.67.134.177:8080/bill/" + this.target + "/cashReceipt",
+          "http://49.50.174.126:8080/bill/" + this.target + "/cashReceipt",
           {
             headers: {
               Authorization: "Bearer " + this.$store.state.token,
@@ -111,7 +111,7 @@ export default {
     clickSaveButton() {
       axios
         .post(
-          "http://118.67.134.177:8080/bill/cashReceipt",
+          "http://49.50.174.126:8080/bill/cashReceipt",
           {
             studentId: this.target,
             cashReceipt: enc.encryptValue(this.details.cashReceipt),

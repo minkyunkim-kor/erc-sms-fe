@@ -232,7 +232,7 @@ export default {
       this.details.length = 0;
       axios
         .get(
-          "http://118.67.134.177:8080/bill/summary?targetYear=" +
+          "http://49.50.174.126:8080/bill/summary?targetYear=" +
             this.targetYear,
           {
             headers: {
@@ -327,7 +327,6 @@ export default {
   margin-bottom: 5px;
   margin-left: 10px;
   margin-right: 10px;
-  border: 1px solid black;
   border-collapse: collapse;
   width: 100%;
 }
@@ -338,11 +337,11 @@ export default {
 }
 #summary-content th {
   background-color: #d9d9d9;
-  border: 1px solid black;
+  border: 1px solid gainsboro;
   border-collapse: collapse;
 }
 #summary-content td {
-  border: 1px solid black;
+  border: 1px solid gainsboro;
   border-collapse: collapse;
 }
 </style>

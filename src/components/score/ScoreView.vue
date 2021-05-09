@@ -275,7 +275,7 @@ export default {
     loadScoreData() {
       axios
         .get(
-          "http://118.67.134.177:8080/student/score?startDate=" +
+          "http://49.50.174.126:8080/student/score?startDate=" +
             this.startDate +
             "&endDate=" +
             this.endDate,

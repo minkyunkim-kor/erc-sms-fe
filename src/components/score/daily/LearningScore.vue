@@ -103,7 +103,7 @@ export default {
     loadLearningData(targetDate) {
       axios
         .get(
-          "http://118.67.134.177:8080/student/score/target?targetDate=" +
+          "http://49.50.174.126:8080/student/score/target?targetDate=" +
             targetDate,
           {
             headers: {

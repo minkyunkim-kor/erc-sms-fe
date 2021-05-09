@@ -162,7 +162,7 @@ export default {
     loadBillList() {
       axios
         .get(
-          "http://118.67.134.177:8080/bill?targetMonth=" + this.targetMonth,
+          "http://49.50.174.126:8080/bill?targetMonth=" + this.targetMonth,
           {
             headers: {
               Authorization: "Bearer " + this.$store.state.token,
@@ -211,7 +211,7 @@ export default {
         });
       });
       axios
-        .post("http://118.67.134.177:8080/bill", req, {
+        .post("http://49.50.174.126:8080/bill", req, {
           headers: {
             Authorization: "Bearer " + this.$store.state.token,
             "erc-user-id": this.$store.state.uid,

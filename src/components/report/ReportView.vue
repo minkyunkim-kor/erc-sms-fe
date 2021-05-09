@@ -106,13 +106,10 @@
       pdf-orientation="landscape"
       pdf-content-width="1200px"
       :html-to-pdf-options="options"
-      @progress="onProgress($event)"
-      @hasStartedGeneration="hasStartedGeneration()"
-      @hasGenerated="hasGenerated($event)"
       ref="target"
     >
       <section slot="pdf-content">
-        <report-pdf-view :details.sync="reportResult" />
+        <report-pdf-view :details.sync="reportResult" :comment.sync="comment" />
       </section>
     </vue-html2pdf>
   </v-container>
@@ -142,6 +139,7 @@ export default {
     startDate: "",
     endDateMenu: false,
     endDate: "",
+    comment: "",
     reportResult: {
       nameKorean: "",
       nameEnglish: "",
@@ -157,7 +155,7 @@ export default {
         height: 1696,
         scale: 4,
         dpi: 300,
-        y: -25,
+        y: -20,
         letterRendering: true,
       },
       jsPDF: {
@@ -170,7 +168,7 @@ export default {
   methods: {
     loadStudentNames() {
       axios
-        .get("http://118.67.134.177:8080/student/score/manual", {
+        .get("http://49.50.174.126:8080/student/score/manual", {
           headers: {
             Authorization: "Bearer " + this.$store.state.token,
             "erc-user-id": this.$store.state.uid,
@@ -198,10 +196,12 @@ export default {
       this.endDateMenu = false;
     },
     searchReportData() {
+      this.comment = "";
+      this.$store.state.comment = "";
       var index = this.names.findIndex((n) => n === this.target);
       axios
         .get(
-          "http://118.67.134.177:8080/student/score/report?startDate=" +
+          "http://49.50.174.126:8080/student/score/report?startDate=" +
             this.startDate +
             "&endDate=" +
             this.endDate,
@@ -246,6 +246,7 @@ export default {
         });
     },
     exportReport() {
+      this.comment = this.$store.state.comment;
       this.$refs.target.generatePdf();
     },
   },

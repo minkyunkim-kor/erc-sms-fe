@@ -4,7 +4,7 @@
       <v-spacer></v-spacer>
       <v-btn small color="#99B8CA" @click="logout">Logout</v-btn>
     </v-app-bar>
-    <v-navigation-drawer app bottom permanent width="200px">
+    <v-navigation-drawer app bottom permanent width="250px">
       <template v-slot:prepend>
         <v-list-item two-line>
           <v-list-item-avatar>

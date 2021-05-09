@@ -147,7 +147,9 @@
             </v-btn>
           </v-col>
           <v-col cols="2">
-            <v-btn block small @click="removeStudent">삭제</v-btn>
+            <v-btn id="btn-remove" block small @click="removeStudent">
+              삭제
+            </v-btn>
           </v-col>
           <v-col cols="2">
             <v-btn id="btn-save" block small @click="clickSaveButton">
@@ -227,7 +229,7 @@ export default {
     loadStudentData() {
       this.detail = {};
       axios
-        .get("http://118.67.134.177:8080/student/" + this.selectedStudentId, {
+        .get("http://49.50.174.126:8080/student/" + this.selectedStudentId, {
           headers: {
             Authorization: "Bearer " + this.$store.state.token,
             "erc-user-id": this.$store.state.uid,
@@ -259,7 +261,7 @@ export default {
       }
       axios
         .post(
-          "http://118.67.134.177:8080/student/" + this.selectedStudentId,
+          "http://49.50.174.126:8080/student/" + this.selectedStudentId,
           {
             category: this.detail.category,
             registeredDate: this.detail.registeredDate,

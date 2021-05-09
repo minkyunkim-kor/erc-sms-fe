@@ -174,7 +174,7 @@ export default {
         return;
       }
       axios
-        .post("http://118.67.134.177:8080/student/score", req, {
+        .post("http://49.50.174.126:8080/student/score", req, {
           headers: {
             Authorization: "Bearer " + this.$store.state.token,
             "erc-user-id": this.$store.state.uid,

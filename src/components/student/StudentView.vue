@@ -31,12 +31,14 @@
       @dblclick:row="dblClickStudent"
     >
       <template v-slot:[`item.gender`]="{ item }">
-        <v-img
-          v-if="item.gender === '남자'"
-          src="../../assets/boy.png"
-          width="30px"
-        />
-        <v-img v-else src="../../assets/girl.png" width="30px" />
+        <v-row justify="center" align="center">
+          <v-img
+            v-if="item.gender === '남자'"
+            src="../../assets/boy.png"
+            max-width="30px"
+          />
+          <v-img v-else src="../../assets/girl.png" max-width="30px" />
+        </v-row>
       </template>
       <template v-slot:expanded-item="{ headers, item }">
         <td :colspan="headers.length">
@@ -152,7 +154,7 @@ export default {
     loadStudentData() {
       this.studentInfo.length = 0;
       axios
-        .get("http://118.67.134.177:8080/student", {
+        .get("http://49.50.174.126:8080/student", {
           headers: {
             Authorization: "Bearer " + this.$store.state.token,
             "erc-user-id": this.$store.state.uid,

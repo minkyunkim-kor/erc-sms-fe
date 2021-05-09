@@ -150,15 +150,8 @@
     </v-row>
     <v-row>
       <v-col cols="1" />
-      <v-col cols="10" id="border-row">
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
+      <v-col cols="10" id="border-row" @click="inputComment">
+        <div id="comment" v-html="comment" />
       </v-col>
       <v-col cols="1" />
     </v-row>
@@ -169,15 +162,23 @@
       <br />
       <br />
     </v-row>
+    <comment-popup :showDialog.sync="showDialog" />
   </div>
 </template>
 
 <script>
+import CommentPopup from "../popup/CommentPopup";
+
 export default {
   props: {
     details: Object,
   },
+  components: {
+    CommentPopup,
+  },
   data: () => ({
+    showDialog: false,
+    comment: "",
     attitudeChartOptions: {
       xaxis: { categories: ["A", "H", "P", "M"] },
       yaxis: { min: 0, max: 6, forceNiceScale: true },
@@ -267,12 +268,20 @@ export default {
       ];
       this.$refs.learningChart.updateSeries(this.learningInfo);
     },
+    inputComment() {
+      this.showDialog = true;
+    },
   },
   watch: {
     details(newVal, oldVal) {
       if (newVal != oldVal) {
         this.updateAttitudeChart();
         this.updateLearningChart();
+      }
+    },
+    showDialog(newVal) {
+      if (!newVal) {
+        this.comment = this.$store.state.comment;
       }
     },
   },
@@ -339,5 +348,10 @@ export default {
 #chart-table-chart {
   border: 1px solid #bfbfbf !important;
   border-collapse: collapse;
+}
+#comment {
+  font-family: "NanumSquareRound", sans-serif;
+  font-size: 18px;
+  font-weight: 500;
 }
 </style>

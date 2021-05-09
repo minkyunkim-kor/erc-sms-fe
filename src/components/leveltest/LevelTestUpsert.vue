@@ -141,7 +141,7 @@ export default {
   methods: {
     loadStudentLevelTestData() {
       axios
-        .get("http://118.67.134.177:8080/student/" + this.target + "/test", {
+        .get("http://49.50.174.126:8080/student/" + this.target + "/test", {
           headers: {
             Authorization: "Bearer " + this.$store.state.token,
             "erc-user-id": this.$store.state.uid,
@@ -178,7 +178,7 @@ export default {
       }
       axios
         .post(
-          "http://118.67.134.177:8080/student/" + this.details.id + "/test",
+          "http://49.50.174.126:8080/student/" + this.details.id + "/test",
           {
             initTestLevel: this.details.testLevel,
             initTestScore: this.details.testScore,

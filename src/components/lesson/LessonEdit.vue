@@ -94,7 +94,9 @@
             </v-btn>
           </v-col>
           <v-col cols="2">
-            <v-btn block small @click="removeLesson">삭제</v-btn>
+            <v-btn id="btn-remove" block small @click="removeLesson">
+              삭제
+            </v-btn>
           </v-col>
           <v-col cols="2">
             <v-btn id="btn-save" block small @click="saveLesson">저장</v-btn>
@@ -163,7 +165,7 @@ export default {
     loadLessonData() {
       this.details.length = 0;
       axios
-        .get("http://118.67.134.177:8080/lesson/" + this.selectLessonId, {
+        .get("http://49.50.174.126:8080/lesson/" + this.selectLessonId, {
           headers: {
             Authorization: "Bearer " + this.$store.state.token,
             "erc-user-id": this.$store.state.uid,
@@ -188,7 +190,7 @@ export default {
       }
       axios
         .post(
-          "http://118.67.134.177:8080/lesson/" + this.selectLessonId,
+          "http://49.50.174.126:8080/lesson/" + this.selectLessonId,
           {
             name: this.name,
             teacherName: enc.encryptValue(this.teacherName),

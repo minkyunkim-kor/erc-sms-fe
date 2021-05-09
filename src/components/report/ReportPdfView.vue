@@ -11,7 +11,6 @@
     <v-row>
       <br />
       <br />
-      <br />
     </v-row>
     <v-row>
       <v-col cols="1" />
@@ -59,7 +58,6 @@
       <v-col cols="1" />
     </v-row>
     <v-row>
-      <br />
       <br />
       <br />
     </v-row>
@@ -112,7 +110,6 @@
     <v-row>
       <br />
       <br />
-      <br />
     </v-row>
     <v-row>
       <v-col cols="1" />
@@ -143,7 +140,6 @@
     <v-row>
       <br />
       <br />
-      <br />
     </v-row>
     <v-row>
       <v-col cols="1" />
@@ -158,19 +154,11 @@
     <v-row>
       <v-col cols="1" />
       <v-col cols="10" id="border-row">
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
+        <div id="comment" v-html="comment" />
       </v-col>
       <v-col cols="1" />
     </v-row>
     <v-row>
-      <br />
       <br />
       <br />
     </v-row>
@@ -185,6 +173,7 @@
 export default {
   props: {
     details: Object,
+    comment: String,
   },
   data: () => ({
     attitudeChartOptions: {
@@ -205,7 +194,15 @@ export default {
           "Writing",
           "Speaking",
         ],
-        labels: { rotate: -45, hideOverlappingLabels: false },
+        labels: {
+          rotate: 0,
+          hideOverlappingLabels: false,
+          style: {
+            fontSize: "15px",
+            fontFamily: "NanumSquareRound, sans-serif",
+            fontWeight: 500,
+          },
+        },
       },
       yaxis: {
         min: 0,
@@ -294,7 +291,7 @@ export default {
 }
 #report-title {
   font-family: "NanumSquareRound", sans-serif;
-  font-size: 30px;
+  font-size: 45px;
   font-weight: 800;
   margin-bottom: 0px;
   margin-left: 10px;
@@ -304,7 +301,7 @@ export default {
 }
 #report-label {
   font-family: "NanumSquareRound", sans-serif;
-  font-size: 18px;
+  font-size: 30px;
   text-align: start;
   margin-bottom: 0px;
   color: #0055a0;
@@ -316,9 +313,13 @@ export default {
 #info-title {
   font-family: "NanumSquareRound", sans-serif;
   color: grey;
+  font-size: 15px;
+  font-weight: 500;
 }
 #info-value {
   font-family: "NanumSquareRound", sans-serif;
+  font-size: 20px;
+  font-weight: 500;
 }
 #chart-table {
   border-collapse: collapse;
@@ -329,7 +330,7 @@ export default {
   border-collapse: collapse;
   background-color: #d9d9d9;
   font-family: "NanumSquareRound", sans-serif;
-  font-size: 13px;
+  font-size: 20px;
   font-weight: 500;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -340,7 +341,7 @@ export default {
   background-color: #f2f2f2;
   width: 25%;
   font-family: "NanumSquareRound", sans-serif;
-  font-size: 12px;
+  font-size: 20px;
   font-weight: 500;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -348,6 +349,11 @@ export default {
 #chart-table-chart {
   border: 1px solid #bfbfbf !important;
   border-collapse: collapse;
+}
+#comment {
+  font-family: "NanumSquareRound", sans-serif;
+  font-size: 20px;
+  font-weight: 500;
 }
 .col-10p {
   flex: 0 0 10%;

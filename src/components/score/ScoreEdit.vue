@@ -216,7 +216,9 @@
             </v-btn>
           </v-col>
           <v-col cols="2">
-            <v-btn block small @click="clickRemoveButton">삭제</v-btn>
+            <v-btn id="btn-remove" block small @click="clickRemoveButton">
+              삭제
+            </v-btn>
           </v-col>
           <v-col cols="2">
             <v-btn id="btn-save" block small @click="clickSaveButton">
@@ -303,7 +305,7 @@ export default {
     loadManualTarget() {
       axios
         .get(
-          "http://118.67.134.177:8080/student/" +
+          "http://49.50.174.126:8080/student/" +
             this.selectedId +
             "/score?targetDate=" +
             this.targetDate,
@@ -416,7 +418,7 @@ export default {
       }
       axios
         .post(
-          "http://118.67.134.177:8080/student/score",
+          "http://49.50.174.126:8080/student/score",
           {
             targetDate: this.selected.targetDate,
             input: [

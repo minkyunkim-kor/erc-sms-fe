@@ -48,7 +48,7 @@ export default {
       if (this.component !== "score") {
         axios
           .delete(
-            "http://118.67.134.177:8080/" + this.component + "/" + this.target,
+            "http://49.50.174.126:8080/" + this.component + "/" + this.target,
             {
               headers: {
                 Authorization: "Bearer " + this.$store.state.token,
@@ -63,7 +63,7 @@ export default {
       } else {
         axios
           .delete(
-            "http://118.67.134.177:8080/student/score?studentId=" +
+            "http://49.50.174.126:8080/student/score?studentId=" +
               this.target +
               "&targetDate=" +
               this.targetDate,

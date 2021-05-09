@@ -47,7 +47,7 @@ export default {
     clickLogin() {
       axios
         .post(
-          "http://118.67.134.177:8080/signin",
+          "http://49.50.174.126:8080/signin",
           {
             id: this.id,
             pw: enc.encryptValue(this.pw),

@@ -80,7 +80,7 @@ export default {
     getUnpaidInfo() {
       axios
         .get(
-          "http://118.67.134.177:8080/bill/unpaid?targetYear=" +
+          "http://49.50.174.126:8080/bill/unpaid?targetYear=" +
             this.targetYear,
           {
             headers: {
