@@ -19,6 +19,8 @@
       :headers="headers"
       :items="levelTestInfo"
       :search="search"
+      :loading="loading"
+      loading-text="레벨 테스트 정보를 불러오는 중입니다."
       @dblclick:row="clickUpsertButton"
     >
       <template v-slot:[`item.name`]="{ item }">
@@ -87,10 +89,12 @@ export default {
     levelTestInfo: [],
     showDialog: false,
     selectStudent: "",
+    loading: false,
   }),
   methods: {
     loadStudentLevelTestData() {
       this.levelTestInfo.length = 0;
+      this.loading = true;
       axios
         .get("http://49.50.174.126:8080/student/test", {
           headers: {
@@ -118,7 +122,7 @@ export default {
             return a.name_ko < b.name_ko ? -1 : a.name_ko > b.name_ko ? 1 : 0;
           });
           this.$store.state.levelTest = this.levelTestInfo;
-          this.$forceUpdate();
+          this.loading = false;
         });
     },
     getName(name_ko, name_en) {

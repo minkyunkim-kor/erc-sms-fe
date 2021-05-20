@@ -114,7 +114,7 @@ export default {
         )
         .then((response) => {
           this.scores = [];
-          response.data.targets.forEach((score) => {
+          response.data.forEach((score) => {
             this.scores.push({
               studentId: score.studentId,
               name: this.getName(score.studentName, score.studentNameEn),

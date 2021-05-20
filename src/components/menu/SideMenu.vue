@@ -64,6 +64,18 @@
           </v-list-item>
         </v-list-group>
       </v-list>
+      <v-list v-if="role === 'ADMIN'">
+        <v-list-group no-action prepend-icon="mdi-credit-card-multiple-outline">
+          <v-list-item-content slot="activator">
+            <v-list-item-title>설정</v-list-item-title>
+          </v-list-item-content>
+          <v-list-item v-for="(item, i) in adminMenu" :key="i" :to="item.to">
+            <v-list-item-content>
+              <v-list-item-title v-text="item.title" />
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-group>
+      </v-list>
     </v-navigation-drawer>
   </div>
 </template>
@@ -80,6 +92,7 @@ export default {
       { title: "레벨 테스트", to: "/users/levelTest" },
       { title: "전체 평가데이터", to: "/users/score" },
       { title: "월간 보고서", to: "/users/report" },
+      { title: "학습 진도표", to: "/users/progress" },
     ],
     billMenu: [
       { title: "수납현황", to: "/users/bill" },
@@ -87,11 +100,15 @@ export default {
       { title: "매출 현황", to: "/users/billSummary" },
       { title: "현금영수증 정보", to: "/users/cashReceipt" },
     ],
+    adminMenu: [{ title: "계정관리", to: "/users/account" }],
     barColor: "#f4f6f9",
   }),
   computed: {
     name: function () {
       return this.$store.state.name;
+    },
+    role: function () {
+      return this.$store.state.role;
     },
   },
   methods: {

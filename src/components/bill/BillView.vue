@@ -59,6 +59,8 @@
       :headers="headers"
       :items="bills"
       :search="search"
+      :loading="loading"
+      loading-text="수납 현황 정보를 불러오는 중입니다."
       disable-sort
     >
       <template v-slot:[`item.actions`]="{ item }">
@@ -192,6 +194,7 @@ export default {
         filterable: false,
       },
     ],
+    loading: false,
   }),
   methods: {
     saveTargetMonth() {
@@ -203,19 +206,17 @@ export default {
       return num.toString().replace(regexp, ",");
     },
     loadBillList() {
+      this.loading = true;
       axios
-        .get(
-          "http://49.50.174.126:8080/bill?targetMonth=" + this.targetMonth,
-          {
-            headers: {
-              Authorization: "Bearer " + this.$store.state.token,
-              "erc-user-id": this.$store.state.uid,
-            },
-          }
-        )
+        .get("http://49.50.174.126:8080/bill?targetMonth=" + this.targetMonth, {
+          headers: {
+            Authorization: "Bearer " + this.$store.state.token,
+            "erc-user-id": this.$store.state.uid,
+          },
+        })
         .then((response) => {
           this.bills.length = 0;
-          response.data.billInfo.forEach((billInfo) => {
+          response.data.forEach((billInfo) => {
             if (Number(billInfo.tuition) + Number(billInfo.bookPrice) > 0) {
               this.bills.push({
                 studentId: billInfo.studentId,
@@ -237,6 +238,7 @@ export default {
           this.bills.sort(function (a, b) {
             return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
           });
+          this.loading = false;
         });
     },
     checkPaidStatus(billInfo) {

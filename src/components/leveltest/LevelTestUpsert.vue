@@ -55,8 +55,23 @@
           </v-col>
           <v-col cols="3">
             <v-select
+              v-if="checkLevelA_1(details.initLevelA)"
               id="add-input"
-              :items="level_b"
+              :items="level_b_1"
+              v-model="details.initLevelB"
+              hide-details
+            />
+            <v-select
+              v-else-if="checkLevelA_2(details.initLevelA)"
+              id="add-input"
+              :items="level_b_2"
+              v-model="details.initLevelB"
+              hide-details
+            />
+            <v-select
+              v-else
+              id="add-input"
+              :items="level_b_3"
               v-model="details.initLevelB"
               hide-details
             />
@@ -116,7 +131,7 @@ export default {
   data: () => ({
     testLevels: ["레벨1", "레벨2", "레벨3"],
     level_a: ["A", "B", "C", "PR", "D", "E", "F", "G", "H", "I", "J", "K"],
-    level_b: [
+    level_b_1: [
       "1-1",
       "1-2",
       "2-1",
@@ -134,11 +149,35 @@ export default {
       "8-1",
       "8-2",
     ],
+    level_b_2: [
+      "1-1",
+      "1-2",
+      "2-1",
+      "2-2",
+      "3-1",
+      "3-2",
+      "4-1",
+      "4-2",
+      "5-1",
+      "5-2",
+      "6-1",
+      "6-2",
+    ],
+    level_b_3: ["1", "2", "3", "4", "5", "6", "7", "8"],
     isError: false,
     errorMessage: "",
     details: {},
   }),
   methods: {
+    checkLevelA_1(levelA) {
+      return (
+        levelA === undefined ||
+        ["A", "B", "C", "D", "E", "F", "H"].includes(levelA)
+      );
+    },
+    checkLevelA_2(levelA) {
+      return ["PR", "G"].includes(levelA);
+    },
     loadStudentLevelTestData() {
       axios
         .get("http://49.50.174.126:8080/student/" + this.target + "/test", {
@@ -198,6 +237,7 @@ export default {
     checkDataValidate() {
       if (
         this.details.testLevel === undefined ||
+        this.details.testLevel === null ||
         this.details.testLevel.length === 0
       ) {
         this.isError = true;

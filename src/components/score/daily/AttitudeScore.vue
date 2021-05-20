@@ -39,8 +39,25 @@
       </v-col>
       <v-col cols="10p" id="select">
         <v-select
+          v-if="checkLevelA_1(score.level_a)"
           id="add-input"
-          :items="level_b"
+          :items="level_b_1"
+          :disabled="score.absent"
+          v-model="score.level_b"
+          hide-details
+        />
+        <v-select
+          v-else-if="checkLevelA_2(score.level_a)"
+          id="add-input"
+          :items="level_b_2"
+          :disabled="score.absent"
+          v-model="score.level_b"
+          hide-details
+        />
+        <v-select
+          v-else
+          id="add-input"
+          :items="level_b_3"
           :disabled="score.absent"
           v-model="score.level_b"
           hide-details
@@ -96,7 +113,7 @@ import enc from "../../util/enc";
 export default {
   data: () => ({
     level_a: ["A", "B", "C", "PR", "D", "E", "F", "G", "H", "I", "J", "K"],
-    level_b: [
+    level_b_1: [
       "1-1",
       "1-2",
       "2-1",
@@ -114,9 +131,33 @@ export default {
       "8-1",
       "8-2",
     ],
+    level_b_2: [
+      "1-1",
+      "1-2",
+      "2-1",
+      "2-2",
+      "3-1",
+      "3-2",
+      "4-1",
+      "4-2",
+      "5-1",
+      "5-2",
+      "6-1",
+      "6-2",
+    ],
+    level_b_3: ["1", "2", "3", "4", "5", "6", "7", "8"],
     scores: [],
   }),
   methods: {
+    checkLevelA_1(levelA) {
+      return (
+        levelA === undefined ||
+        ["A", "B", "C", "D", "E", "F", "H"].includes(levelA)
+      );
+    },
+    checkLevelA_2(levelA) {
+      return ["PR", "G"].includes(levelA);
+    },
     loadAttitudeData(targetDate) {
       axios
         .get(
@@ -131,17 +172,22 @@ export default {
         )
         .then((response) => {
           this.scores = [];
-          response.data.targets.forEach((score) => {
+          console.log(response.data);
+          response.data.forEach((score) => {
             this.scores.push({
               studentId: score.studentId,
               name: this.getName(score.studentName, score.studentNameEn),
               level_a:
-                score.lastLevel.slice(0, score.lastLevel.length - 3) !== ""
+                score.lastLevel.length > 2
                   ? score.lastLevel.slice(0, score.lastLevel.length - 3)
+                  : score.lastLevel.length === 2
+                  ? score.lastLevel.slice(0, 1)
                   : "B",
               level_b:
-                score.lastLevel.slice(-3, score.lastLevel.length) !== ""
+                score.lastLevel.length > 2
                   ? score.lastLevel.slice(-3, score.lastLevel.length)
+                  : score.lastLevel.length === 2
+                  ? score.lastLevel.slice(1, 2)
                   : "1-1",
               absent: score.absent === null ? false : score.absent,
               scoreA: score.scoreA,

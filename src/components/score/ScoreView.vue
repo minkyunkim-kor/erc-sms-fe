@@ -94,6 +94,8 @@
       :headers="headers"
       :items="scoreInfo"
       :search="search"
+      :loading="loading"
+      loading-text="평가 데이터를 불러오는 중입니다."
       disable-sort
       @dblclick:row="dblClickItem"
     >
@@ -262,6 +264,7 @@ export default {
       { text: "S", align: "center", value: "scoreS", filterable: false },
       { text: "담당 선생님", align: "center", value: "teacher" },
     ],
+    loading: false,
   }),
   methods: {
     saveStartDate(date) {
@@ -273,6 +276,7 @@ export default {
       this.endDateMenu = false;
     },
     loadScoreData() {
+      this.loading = true;
       axios
         .get(
           "http://49.50.174.126:8080/student/score?startDate=" +
@@ -310,9 +314,9 @@ export default {
                   ? enc.decryptValue(score.teacher)
                   : "",
             });
-            this.$forceUpdate();
           });
           this.$store.state.scoreInfo = this.scoreInfo;
+          this.loading = false;
         });
     },
     clickDailyInputButton() {

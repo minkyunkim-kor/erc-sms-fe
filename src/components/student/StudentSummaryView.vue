@@ -168,6 +168,7 @@ export default {
             response.data.category.withdrawal,
           ];
           this.register = response.data.register;
+          this.bar_chart_options.xaxis.categories.length = 0;
           for (const key of Object.keys(this.register).sort()) {
             this.bar_chart_options.xaxis.categories.push(key);
             this.bar_series[0].data.push(this.register[key]);

@@ -14,7 +14,13 @@
         />
       </v-col>
     </v-row>
-    <v-data-table :headers="headers" :items="unpaid" disable-sort>
+    <v-data-table
+      :headers="headers"
+      :items="unpaid"
+      :loading="loading"
+      loading-text="미납금 정보를 불러오는 중입니다."
+      disable-sort
+    >
       <template v-slot:no-data>
         <p id="no-data">미납금 정보가 없습니다.</p>
       </template>
@@ -57,6 +63,7 @@ export default {
       { text: "12월", align: "center", value: "december" },
     ],
     unpaid: [],
+    loading: false,
   }),
   computed: {
     years: {
@@ -78,10 +85,10 @@ export default {
       this.yearMenu = false;
     },
     getUnpaidInfo() {
+      this.loading = true;
       axios
         .get(
-          "http://49.50.174.126:8080/bill/unpaid?targetYear=" +
-            this.targetYear,
+          "http://49.50.174.126:8080/bill/unpaid?targetYear=" + this.targetYear,
           {
             headers: {
               Authorization: "Bearer " + this.$store.state.token,
@@ -110,6 +117,7 @@ export default {
               december: this.currencyFormat(info.december),
             });
           });
+          this.loading = false;
         });
     },
     currencyFormat(num) {

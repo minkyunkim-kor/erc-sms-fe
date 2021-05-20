@@ -179,6 +179,7 @@ export default {
         this.detail = {
           category: "신입생",
           registeredDate: new Date().toISOString().substr(0, 10),
+          gender: "여자",
         };
       }
     },

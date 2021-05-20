@@ -25,8 +25,23 @@
           </v-col>
           <v-col cols="3">
             <v-select
+              v-if="checkLevelA_1(selected.level_a)"
               id="add-input"
-              :items="level_b"
+              :items="level_b_1"
+              v-model="selected.level_b"
+              hide-details
+            />
+            <v-select
+              v-else-if="checkLevelA_2(selected.level_a)"
+              id="add-input"
+              :items="level_b_2"
+              v-model="selected.level_b"
+              hide-details
+            />
+            <v-select
+              v-else
+              id="add-input"
+              :items="level_b_3"
               v-model="selected.level_b"
               hide-details
             />
@@ -272,7 +287,7 @@ export default {
     dateMenu: false,
     selected: {},
     level_a: ["A", "B", "C", "PR", "D", "E", "F", "G", "H", "I", "J", "K"],
-    level_b: [
+    level_b_1: [
       "1-1",
       "1-2",
       "2-1",
@@ -290,12 +305,36 @@ export default {
       "8-1",
       "8-2",
     ],
+    level_b_2: [
+      "1-1",
+      "1-2",
+      "2-1",
+      "2-2",
+      "3-1",
+      "3-2",
+      "4-1",
+      "4-2",
+      "5-1",
+      "5-2",
+      "6-1",
+      "6-2",
+    ],
+    level_b_3: ["1", "2", "3", "4", "5", "6", "7", "8"],
     isError: false,
     errorMessage: "",
     removeDialog: false,
     confirmRemove: false,
   }),
   methods: {
+    checkLevelA_1(levelA) {
+      return (
+        levelA === undefined ||
+        ["A", "B", "C", "D", "E", "F", "H"].includes(levelA)
+      );
+    },
+    checkLevelA_2(levelA) {
+      return ["PR", "G"].includes(levelA);
+    },
     saveTargetDate(date) {
       this.$refs.dateMenu.save(date);
     },
@@ -323,24 +362,22 @@ export default {
             name: enc.decryptValue(response.data.name),
             targetDate: response.data.lessonDate,
             level_a:
-              response.data.lessonLevel.slice(
-                0,
-                response.data.lessonLevel.length - 3
-              ) !== ""
+              response.data.lessonLevel.length > 2
                 ? response.data.lessonLevel.slice(
                     0,
                     response.data.lessonLevel.length - 3
                   )
+                : response.data.lessonLevel.length === 2
+                ? response.data.lessonLevel.slice(0, 1)
                 : "",
             level_b:
-              response.data.lessonLevel.slice(
-                -3,
-                response.data.lessonLevel.length
-              ) !== ""
+              response.data.lessonLevel.length > 2
                 ? response.data.lessonLevel.slice(
                     -3,
                     response.data.lessonLevel.length
                   )
+                : response.data.lessonLevel.length === 2
+                ? response.data.lessonLevel.slice(1, 2)
                 : "1-1",
             scoreA: response.data.scoreA,
             scoreH: response.data.scoreH,

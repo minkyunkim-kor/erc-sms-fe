@@ -25,6 +25,8 @@
       :headers="headers"
       :items="studentInfo"
       :search="search"
+      :loading="loading"
+      loading-text="학생 정보를 불러오는 중입니다."
       :single-expand="singleExpand"
       :expanded.sync="expanded"
       show-expand
@@ -149,10 +151,12 @@ export default {
       },
     ],
     studentInfo: [],
+    loading: false,
   }),
   methods: {
     loadStudentData() {
       this.studentInfo.length = 0;
+      this.loading = true;
       axios
         .get("http://49.50.174.126:8080/student", {
           headers: {
@@ -177,7 +181,7 @@ export default {
             });
           });
           this.$store.state.students = this.studentInfo;
-          this.$forceUpdate();
+          this.loading = false;
         });
     },
     clickAddStudent() {

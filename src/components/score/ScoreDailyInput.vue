@@ -95,7 +95,9 @@
             </v-btn>
           </v-col>
           <v-col cols="2" v-if="s === 3">
-            <v-btn block small @click="clickSaveButton">저장</v-btn>
+            <v-btn id="btn-save" block small @click="clickSaveButton">
+              저장
+            </v-btn>
           </v-col>
         </v-row>
       </v-card-text>

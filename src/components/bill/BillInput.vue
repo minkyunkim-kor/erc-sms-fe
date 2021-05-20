@@ -161,18 +161,15 @@ export default {
     },
     loadBillList() {
       axios
-        .get(
-          "http://49.50.174.126:8080/bill?targetMonth=" + this.targetMonth,
-          {
-            headers: {
-              Authorization: "Bearer " + this.$store.state.token,
-              "erc-user-id": this.$store.state.uid,
-            },
-          }
-        )
+        .get("http://49.50.174.126:8080/bill?targetMonth=" + this.targetMonth, {
+          headers: {
+            Authorization: "Bearer " + this.$store.state.token,
+            "erc-user-id": this.$store.state.uid,
+          },
+        })
         .then((response) => {
           this.bills.length = 0;
-          response.data.billInfo.forEach((billInfo) => {
+          response.data.forEach((billInfo) => {
             this.bills.push({
               studentId: billInfo.studentId,
               name: enc.decryptValue(billInfo.name),

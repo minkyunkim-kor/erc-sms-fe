@@ -84,15 +84,12 @@ export default {
   methods: {
     loadCashReceiptInfo() {
       axios
-        .get(
-          "http://49.50.174.126:8080/bill/" + this.target + "/cashReceipt",
-          {
-            headers: {
-              Authorization: "Bearer " + this.$store.state.token,
-              "erc-user-id": this.$store.state.uid,
-            },
-          }
-        )
+        .get("http://49.50.174.126:8080/bill/" + this.target + "/cashReceipt", {
+          headers: {
+            Authorization: "Bearer " + this.$store.state.token,
+            "erc-user-id": this.$store.state.uid,
+          },
+        })
         .then((response) => {
           this.details = {};
           this.details.studentId = response.data.studentId;

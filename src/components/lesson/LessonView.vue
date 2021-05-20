@@ -25,6 +25,8 @@
       :headers="headers"
       :items="lessonInfo"
       :search="search"
+      :loading="loading"
+      loading-text="클래스 정보를 불러오는 중입니다."
       disable-sort
       @dblclick:row="dblClickLesson"
     />
@@ -82,10 +84,12 @@ export default {
     lessonInfo: [],
     search: "",
     selectLesson: "",
+    loading: false,
   }),
   methods: {
     loadLessonData() {
       this.lessonInfo.length = 0;
+      this.loading = true;
       axios
         .get("http://49.50.174.126:8080/lesson", {
           headers: {
@@ -111,7 +115,7 @@ export default {
             this.lessonInfo.push(lessonDetail);
           });
           this.$store.state.lessonInfo = this.lessonInfo;
-          this.$forceUpdate();
+          this.loading = false;
         });
     },
     decryptStudnetName(val) {

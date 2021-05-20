@@ -12,6 +12,8 @@ import BillSummary from "../views/users/BillSummary";
 import Report from "../views/users/Report";
 import CashReceipt from "../views/users/CashReceipt";
 import Unpaid from "../views/users/Unpaid";
+import Progress from "../views/users/Progress";
+import Account from "../views/users/Account";
 
 Vue.use(VueRouter);
 
@@ -28,10 +30,12 @@ const routes = [
       { path: "levelTest", name: "levelTest", component: TestLevel },
       { path: "score", name: "score", component: Score },
       { path: "report", name: "report", component: Report },
+      { path: "progress", name: "progress", component: Progress },
       { path: "bill", name: "bill", component: Bill },
       { path: "billSummary", name: "billSummary", component: BillSummary },
       { path: "cashReceipt", name: "cashReceipt", component: CashReceipt },
       { path: "unpaid", name: "unpaid", component: Unpaid },
+      { path: "account", name: "account", component: Account },
     ],
   },
   { path: "*", redirect: "/login" },

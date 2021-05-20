@@ -249,6 +249,7 @@ export default {
             school: response.data.school,
             phoneNo: enc.decryptValue(response.data.contact),
             addr: enc.decryptValue(response.data.address),
+            extra: response.data.extra,
           };
         });
     },

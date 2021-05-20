@@ -177,13 +177,19 @@ export default {
         .then((res) => {
           this.students.length = 0;
           this.names.length = 0;
-          res.data.targets.forEach((student) => {
+          res.data.forEach((student) => {
             this.students.push({
               studentId: student.studentId,
               name: enc.decryptValue(student.studentName),
               lastLevel: student.lastLevel,
             });
             this.names.push(enc.decryptValue(student.studentName));
+          });
+          this.names.sort(function (a, b) {
+            return a < b ? -1 : a > b ? 1 : 0;
+          });
+          this.students.sort(function (a, b) {
+            return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
           });
         });
     },
@@ -220,7 +226,6 @@ export default {
             grade: res.data.grade,
             level: res.data.level,
             school: res.data.school,
-            initLevel: res.data.initLevel,
             registeredDate: res.data.registeredDate,
             averageA: res.data.averageA,
             averageH: res.data.averageH,

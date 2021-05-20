@@ -11,6 +11,8 @@
           id="add-component"
           :headers="headers"
           :items="cashReceipts"
+          :loading="loading"
+          loading-text="현금영수증 정보를 불러오는 중입니다."
           disable-sort
           @dblclick:row="dblClickItem"
         />
@@ -50,9 +52,11 @@ export default {
       { text: "현금영수증 정보", align: "center", value: "cashReceipt" },
       { text: "비고", align: "center", value: "comment" },
     ],
+    loading: false,
   }),
   methods: {
     loadCashReceiptInfo() {
+      this.loading = true;
       this.cashReceipts.length = 0;
       axios
         .get("http://49.50.174.126:8080/bill/cashReceipt", {
@@ -77,6 +81,7 @@ export default {
           this.cashReceipts.sort(function (a, b) {
             return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
           });
+          this.loading = false;
         });
     },
     dblClickItem(item, select) {

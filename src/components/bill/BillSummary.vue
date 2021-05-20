@@ -242,7 +242,7 @@ export default {
           }
         )
         .then((response) => {
-          response.data.summaries.forEach((item) => {
+          response.data.forEach((item) => {
             this.lineOptions.xaxis.categories.push(
               this.targetYear + "-" + this.pad(item.month, 2)
             );
