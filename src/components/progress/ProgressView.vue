@@ -29,11 +29,7 @@
         </div>
       </template>
       <template v-slot:[`item.progress`]="{ item }">
-        <v-progress-linear
-          v-model="item.percentage"
-          color="#ee534f"
-          height="15"
-        >
+        <v-progress-linear :value="item.percentage" color="#ee534f" height="15">
           <strong> {{ item.percentage }}% </strong>
         </v-progress-linear>
       </template>
@@ -129,10 +125,10 @@ export default {
       level_score.set("E", 76);
       level_score.set("F", 92);
       level_score.set("G", 108);
-      level_score.set("H", 124);
-      level_score.set("I", 132);
-      level_score.set("J", 148);
-      level_score.set("K", 156);
+      level_score.set("H", 120);
+      level_score.set("I", 136);
+      level_score.set("J", 144);
+      level_score.set("K", 152);
       var result = 0;
       if (current.length === 5) {
         result =
@@ -143,7 +139,8 @@ export default {
           level_score.get(current.slice(0, 1)) +
           (2 * (Number(current.slice(1, 2)) - 1) + Number(current.slice(3, 4)));
       } else {
-        result = level_score.get(current.slice(0, 1)) + current.slice(1, 2);
+        result =
+          level_score.get(current.slice(0, 1)) + Number(current.slice(1, 2));
       }
       return ((result / 160.0) * 100).toFixed(1);
     },
