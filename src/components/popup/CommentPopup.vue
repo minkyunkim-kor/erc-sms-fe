@@ -38,7 +38,7 @@ export default {
           this.comment = String(this.$store.state.comment);
           this.comment = this.comment.split("<br />").join("\n");
         } else {
-          this.comment = "코멘트를 입력해 주세요"
+          this.comment = "코멘트를 입력해 주세요";
         }
       }
     },

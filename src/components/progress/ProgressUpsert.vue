@@ -217,10 +217,18 @@ export default {
           paddingRight: "1px",
           height: "40px",
         };
-      } else {
+      } else if (String(label).includes("-2")) {
         return {
           paddingTop: "1px",
           paddingBottom: "1px",
+          paddingLeft: "1px",
+          height: "40px",
+        };
+      } else {
+        return {
+          paddingTop: "15px",
+          paddingBottom: "1px",
+          paddingRight: "1px",
           paddingLeft: "1px",
           height: "40px",
         };

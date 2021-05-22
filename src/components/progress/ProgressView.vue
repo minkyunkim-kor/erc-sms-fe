@@ -69,7 +69,7 @@ export default {
         sortable: false,
       },
       {
-        text: "진행 상태",
+        text: "졸업 달성률",
         align: "center",
         value: "progress",
         width: "55%",
