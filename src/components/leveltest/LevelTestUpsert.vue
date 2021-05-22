@@ -195,10 +195,7 @@ export default {
             ),
             grade: response.data.grade,
             initLevelA: response.data.initLevelA,
-            initLevelB:
-              response.data.initLevelB !== null
-                ? response.data.initLevelB
-                : "1-1",
+            initLevelB: response.data.initLevelB,
             testLevel: response.data.testLevel,
             testScore: response.data.testScore,
             memo: response.data.memo,
@@ -253,20 +250,6 @@ export default {
       } else if (this.details.testScore < 0 || this.details.testScore > 100) {
         this.isError = true;
         this.errorMessage = "올바른 테스트 점수을 입력해주세요";
-        return false;
-      } else if (
-        this.details.initLevelA === undefined ||
-        this.details.initLevelA.length === 0
-      ) {
-        this.isError = true;
-        this.errorMessage = "최초 레벨을 선택해주세요";
-        return false;
-      } else if (
-        this.details.initLevelB === undefined ||
-        this.details.initLevelB.length === 0
-      ) {
-        this.isError = true;
-        this.errorMessage = "최초 레벨을 선택해주세요";
         return false;
       } else {
         return true;
