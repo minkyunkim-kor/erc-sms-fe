@@ -6,17 +6,23 @@
       </v-card-title>
       <v-card-text>
         <v-row id="add-component" align="baseline">
-          <v-col cols="2">
-            <p id="label">이름 :</p>
+          <v-col cols="6">
+            <v-text-field
+              id="add-input"
+              prepend-icon="mdi-account"
+              v-model="details.name"
+              readonly
+              hide-details
+            />
           </v-col>
-          <v-col cols="4">
-            <p id="label">{{ details.name }}</p>
-          </v-col>
-          <v-col cols="2">
-            <p id="label">학년 :</p>
-          </v-col>
-          <v-col cols="4">
-            <p id="label">{{ details.grade }}</p>
+          <v-col cols="6">
+            <v-text-field
+              id="add-input"
+              prepend-icon="mdi-cake-variant"
+              v-model="details.grade"
+              readonly
+              hide-details
+            />
           </v-col>
         </v-row>
         <v-row>
@@ -133,11 +139,6 @@ export default {
 }
 #button-component {
   margin-top: 25px;
-}
-#label {
-  font-family: "NanumSquareRound", sans-serif;
-  font-size: 13px;
-  text-align: center;
 }
 .v-input /deep/ #add-input {
   margin-left: 10px;

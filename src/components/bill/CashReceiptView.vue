@@ -6,11 +6,22 @@
       </v-col>
     </v-row>
     <v-row align="baseline" justify="space-between" class="mt-0">
+      <v-col cols="3">
+        <v-text-field
+          id="search"
+          v-model="search"
+          append-icon="mdi-magnify"
+          placeholder="search"
+        />
+      </v-col>
+    </v-row>
+    <v-row align="baseline" justify="space-between" class="mt-0">
       <v-col cols="12">
         <v-data-table
           id="add-component"
           :headers="headers"
           :items="cashReceipts"
+          :search="search"
           :loading="loading"
           loading-text="현금영수증 정보를 불러오는 중입니다."
           disable-sort
@@ -53,6 +64,7 @@ export default {
       { text: "비고", align: "center", value: "comment" },
     ],
     loading: false,
+    search: "",
   }),
   methods: {
     loadCashReceiptInfo() {
