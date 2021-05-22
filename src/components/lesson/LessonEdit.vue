@@ -228,7 +228,7 @@ export default {
       console.log(err);
       if (err === "duplicate lesson name") {
         this.isError = true;
-        this.errorMessage = "이미 사용된 반 이름입니다.";
+        this.errorMessage = "이미 사용된 클래스 이름입니다.";
       } else if (err === "invalid weekday value") {
         this.isError = true;
         this.errorMessage = "선택하지 않은 수업요일이 있습니다.";
