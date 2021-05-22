@@ -23,7 +23,7 @@
               prepend-icon="mdi-star-circle-outline"
               :items="level_a"
               v-model="selected.level_a"
-              placeholder="결과"
+              placeholder="레벨"
               hide-details
             />
           </v-col>
