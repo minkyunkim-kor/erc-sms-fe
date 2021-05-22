@@ -356,6 +356,8 @@ export default {
           }
         )
         .then((response) => {
+          console.log(response.data.name);
+          console.log(enc.decryptValue(response.data.name));
           this.selected = {
             studentId: response.data.studentId,
             studentScoreId: response.data.studentScoreId,
@@ -389,7 +391,10 @@ export default {
             scoreG: response.data.scoreG,
             scoreW: response.data.scoreW,
             scoreS: response.data.scoreS,
-            teacher: enc.decryptValue(response.data.teacher),
+            teacher:
+              response.data.teacher !== "" && response.data.teacher !== null
+                ? enc.decryptValue(response.data.teacher)
+                : "",
             comment: response.data.comment,
           };
         });
