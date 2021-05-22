@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="showDialog" persistent max-width="300px">
+  <v-dialog v-model="showDialog" persistent max-width="340px">
     <v-card>
       <v-card-title>
         <v-icon id="warning">mdi-emoticon-sad</v-icon>
