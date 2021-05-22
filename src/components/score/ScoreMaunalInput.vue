@@ -474,6 +474,7 @@ export default {
                 extra: {
                   teacher: enc.encryptValue(this.selected.teacher),
                   comment: this.selected.comment,
+                  completed: true,
                 },
               },
             ],

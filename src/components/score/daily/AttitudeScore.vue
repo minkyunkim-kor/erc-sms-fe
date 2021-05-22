@@ -172,7 +172,6 @@ export default {
         )
         .then((response) => {
           this.scores = [];
-          console.log(response.data);
           response.data.forEach((score) => {
             this.scores.push({
               studentId: score.studentId,
@@ -225,20 +224,22 @@ export default {
     validateAttitudeScore() {
       var result = { isError: false };
       this.scores.forEach((score) => {
-        if (!this.scoreValidate(score.scoreA)) {
-          result = { isError: true, message: score.name };
-        } else if (!this.scoreValidate(score.scoreH)) {
-          result = { isError: true, message: score.name };
-        } else if (!this.scoreValidate(score.scoreP)) {
-          result = { isError: true, message: score.name };
-        } else if (!this.scoreValidate(score.scoreM)) {
-          result = { isError: true, message: score.name };
+        if (!score.absent) {
+          if (!this.scoreValidate(score.scoreA)) {
+            result = { isError: true, message: score.name };
+          } else if (!this.scoreValidate(score.scoreH)) {
+            result = { isError: true, message: score.name };
+          } else if (!this.scoreValidate(score.scoreP)) {
+            result = { isError: true, message: score.name };
+          } else if (!this.scoreValidate(score.scoreM)) {
+            result = { isError: true, message: score.name };
+          }
         }
       });
       return result;
     },
     scoreValidate(score) {
-      return score === null || (1 <= score && score <= 5);
+      return score !== null && 1 <= score && score <= 5;
     },
   },
 };

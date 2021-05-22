@@ -157,24 +157,26 @@ export default {
     validateLearningScore() {
       var result = { isError: false };
       this.scores.forEach((score) => {
-        if (!this.scoreValidate(score.scoreD)) {
-          result = { isError: true, message: score.name };
-        } else if (!this.scoreValidate(score.scoreOF)) {
-          result = { isError: true, message: score.name };
-        } else if (!this.scoreValidate(score.scoreC)) {
-          result = { isError: true, message: score.name };
-        } else if (!this.scoreValidate(score.scoreG)) {
-          result = { isError: true, message: score.name };
-        } else if (!this.scoreValidate(score.scoreW)) {
-          result = { isError: true, message: score.name };
-        } else if (!this.scoreValidate(score.scoreS)) {
-          result = { isError: true, message: score.name };
+        if (!score.absent) {
+          if (!this.scoreValidate(score.scoreD)) {
+            result = { isError: true, message: score.name };
+          } else if (!this.scoreValidate(score.scoreOF)) {
+            result = { isError: true, message: score.name };
+          } else if (!this.scoreValidate(score.scoreC)) {
+            result = { isError: true, message: score.name };
+          } else if (!this.scoreValidate(score.scoreG)) {
+            result = { isError: true, message: score.name };
+          } else if (!this.scoreValidate(score.scoreW)) {
+            result = { isError: true, message: score.name };
+          } else if (!this.scoreValidate(score.scoreS)) {
+            result = { isError: true, message: score.name };
+          }
         }
       });
       return result;
     },
     scoreValidate(score) {
-      return score === null || (0 <= score && score <= 5);
+      return score !== null && 0 <= score && score <= 5;
     },
   },
 };

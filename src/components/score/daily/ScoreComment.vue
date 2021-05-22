@@ -82,6 +82,7 @@ export default {
           extra: {
             teacher: enc.encryptValue(item.teacher),
             comment: item.comment,
+            completed: true,
           },
         });
       });
