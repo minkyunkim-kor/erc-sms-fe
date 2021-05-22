@@ -2,7 +2,7 @@
   <v-dialog v-model="showDialog" persistent max-width="400px">
     <v-card>
       <v-card-title id="card-upsert-title">
-        현금영수정 정보 입력/수정
+        현금영수증 정보 입력/수정
       </v-card-title>
       <v-card-text>
         <v-row id="add-component" align="baseline">

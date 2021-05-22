@@ -51,7 +51,7 @@
       <v-col cols="2">
         <v-btn id="add-btn" small block @click="clickAddBillButton">
           <v-icon x-small class="mr-1">mdi-plus</v-icon>
-          수강료 등록
+          수강료 입력
         </v-btn>
       </v-col>
     </v-row>
