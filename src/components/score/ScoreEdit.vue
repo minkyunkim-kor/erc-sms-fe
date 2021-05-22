@@ -356,8 +356,6 @@ export default {
           }
         )
         .then((response) => {
-          console.log(response.data.name);
-          console.log(enc.decryptValue(response.data.name));
           this.selected = {
             studentId: response.data.studentId,
             studentScoreId: response.data.studentScoreId,

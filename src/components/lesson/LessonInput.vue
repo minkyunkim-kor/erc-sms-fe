@@ -185,7 +185,6 @@ export default {
       this.details.splice(index, 1);
     },
     handleError(err) {
-      console.log(err);
       if (err === "duplicate lesson name") {
         this.isError = true;
         this.errorMessage = "이미 사용된 클래스 이름입니다.";
