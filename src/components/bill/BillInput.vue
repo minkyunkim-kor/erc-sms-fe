@@ -170,6 +170,9 @@ export default {
         .then((response) => {
           this.bills.length = 0;
           response.data.forEach((billInfo) => {
+            if (billInfo.category === 3 && Number(billInfo.tuition) + Number(billInfo.bookPrice) === 0) {
+              return;
+            }
             this.bills.push({
               studentId: billInfo.studentId,
               name: enc.decryptValue(billInfo.name),
