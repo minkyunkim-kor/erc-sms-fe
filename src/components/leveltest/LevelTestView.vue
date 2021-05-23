@@ -28,6 +28,9 @@
           {{ getName(item.name_ko, item.name_en) }}
         </div>
       </template>
+      <template v-slot:no-data>
+        <p id="no-data">레벨 테스트 정보가 없습니다.</p>
+      </template>
     </v-data-table>
     <level-test-upsert :showDialog.sync="showDialog" :target="selectStudent" />
   </v-container>

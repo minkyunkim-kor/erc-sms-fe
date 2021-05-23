@@ -20,6 +20,7 @@
             :append-icon="showPw ? 'mdi-eye' : 'mdi-eye-off'"
             :type="showPw ? 'text' : 'password'"
             @click:append="showPw = !showPw"
+            @keypress.enter="clickLogin"
           />
         </v-row>
         <v-btn height="30px" @click="clickLogin">Login</v-btn>

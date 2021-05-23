@@ -47,6 +47,9 @@
           <p id="address">{{ item.addr }}</p>
         </td>
       </template>
+      <template v-slot:no-data>
+        <p id="no-data">학생 정보가 없습니다.</p>
+      </template>
     </v-data-table>
     <student-input :showInputDialog.sync="showInputDialog" />
     <student-edit

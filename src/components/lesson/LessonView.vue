@@ -29,7 +29,11 @@
       loading-text="클래스 정보를 불러오는 중입니다."
       disable-sort
       @dblclick:row="dblClickLesson"
-    />
+    >
+      <template v-slot:no-data>
+        <p id="no-data">클래스 정보가 없습니다.</p>
+      </template>
+    </v-data-table>
     <lesson-input :showInputDialog.sync="showInputDialog" />
     <lesson-edit
       :showEditDialog.sync="showEditDialog"
