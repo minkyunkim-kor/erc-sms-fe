@@ -15,7 +15,7 @@
         />
       </v-col>
       <v-col cols="2">
-        <v-btn id="add-account" small block>
+        <v-btn id="add-account" small block @click="clickAddUserButton">
           <v-icon x-small class="mr-1">mdi-plus</v-icon>
           신규 계정 등록
         </v-btn>
@@ -28,19 +28,35 @@
       :loading="loading"
       loading-text="계정 정보를 불러오는 중입니다."
       disable-sort
+      @dblclick:row="dblClickUser"
     />
+    <account-input :showDialog.sync="showInputDialog" />
+    <account-edit :showDialog.sync="showEditDialog" :target="selectUser" />
   </v-container>
 </template>
 
 <script>
 import axios from "axios";
+import AccountInput from "./AccountInput";
+import AccountEdit from "./AccountEdit";
 
 export default {
-  components: {},
+  components: { AccountInput, AccountEdit },
   created() {
     this.loadUserInfo();
   },
-  watch: {},
+  watch: {
+    showInputDialog(newVal) {
+      if (!newVal) {
+        this.loadUserInfo();
+      }
+    },
+    showEditDialog(newVal) {
+      if (!newVal) {
+        this.loadUserInfo();
+      }
+    },
+  },
   data: () => ({
     users: [],
     search: "",
@@ -50,6 +66,9 @@ export default {
       { text: "지점명", align: "center", value: "name" },
       { text: "사용 중지 여부", align: "center", value: "suspendYn" },
     ],
+    showInputDialog: false,
+    showEditDialog: false,
+    selectUser: "",
   }),
   methods: {
     loadUserInfo() {
@@ -73,6 +92,13 @@ export default {
           });
           this.loading = false;
         });
+    },
+    clickAddUserButton() {
+      this.showInputDialog = true;
+    },
+    dblClickUser(item, select) {
+      this.selectUser = select.item.userId;
+      this.showEditDialog = true;
     },
   },
 };
