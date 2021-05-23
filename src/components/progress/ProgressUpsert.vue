@@ -237,7 +237,32 @@ export default {
     getColor(level, label) {
       var index = this.details.progresses.indexOf(level + label);
       if (index !== -1) {
-        return "#ee534f";
+        switch (level) {
+          case "A":
+            return "#ff2929";
+          case "B":
+            return "#fe860e";
+          case "C":
+            return "#ffed01";
+          case "PR":
+            return "#8f51e1";
+          case "D":
+            return "#1dbd5e";
+          case "E":
+            return "#11b0ff";
+          case "F":
+            return "#314a9b";
+          case "G":
+            return "#91682b";
+          case "H":
+            return "#fd6927";
+          case "I":
+            return "#84e028";
+          case "J":
+            return "#0077d0";
+          case "K":
+            return "#e94964";
+        }
       } else {
         return "white";
       }

@@ -212,12 +212,12 @@ export default {
   },
   watch: {
     startDate(newVal, oldVal) {
-      if (newVal !== oldVal) {
+      if (oldVal !== "" && newVal !== oldVal) {
         this.loadScoreData();
       }
     },
     endDate(newVal, oldVal) {
-      if (newVal !== oldVal) {
+      if (oldVal !== "" && newVal !== oldVal) {
         this.loadScoreData();
       }
     },
