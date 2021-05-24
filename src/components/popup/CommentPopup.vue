@@ -7,7 +7,7 @@
       <v-card-text>
         <v-textarea
           no-resize
-          rows="8"
+          rows="10"
           clearable
           clear-icon="mdi-close-circle-outline"
           outlined
@@ -53,8 +53,8 @@ export default {
     saveComment() {
       this.comment = this.comment.split("\n").join("<br />");
       var count = (this.comment.match(/<br \/>/g) || []).length;
-      if (count < 6) {
-        for (var i = count; i < 6; i++) {
+      if (count < 9) {
+        for (var i = count; i < 9; i++) {
           this.comment += "<br />";
         }
       }

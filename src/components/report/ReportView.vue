@@ -252,6 +252,11 @@ export default {
     },
     exportReport() {
       this.comment = this.$store.state.comment;
+      if (this.comment === "" || this.comment.trim() === "") {
+        for (var i = 0; i < 10; i++) {
+          this.comment += "<br />";
+        }
+      }
       this.$refs.target.generatePdf();
     },
   },
