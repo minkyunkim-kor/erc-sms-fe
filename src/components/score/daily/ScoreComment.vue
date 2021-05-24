@@ -74,7 +74,7 @@ export default {
     getName(name, nameEn) {
       return enc.decryptValue(name) + "(" + nameEn + ")";
     },
-    getSaveCommentDataRequest(targetDate) {
+    getSaveCommentDataRequest(targetDate, isFinish) {
       var req = { targetDate: targetDate, input: [] };
       this.scores.forEach((item) => {
         req.input.push({
@@ -82,7 +82,7 @@ export default {
           extra: {
             teacher: enc.encryptValue(item.teacher),
             comment: item.comment,
-            completed: true,
+            completed: isFinish,
           },
         });
       });

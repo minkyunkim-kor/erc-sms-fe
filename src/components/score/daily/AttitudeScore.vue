@@ -158,6 +158,9 @@ export default {
     checkLevelA_2(levelA) {
       return ["PR", "G"].includes(levelA);
     },
+    initData() {
+      this.scores = [];
+    },
     loadAttitudeData(targetDate) {
       axios
         .get(

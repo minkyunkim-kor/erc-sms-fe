@@ -122,7 +122,7 @@ export default {
       if (newVal) {
         this.s = 1;
         this.targetDate = new Date().toISOString().substr(0, 10);
-        this.$refs.attitude.loadAttitudeData(this.targetDate);
+        this.$refs.attitude.initData();
       }
     },
   },
@@ -168,7 +168,10 @@ export default {
       } else if (this.s === 2) {
         req = this.$refs.learning.getSaveLearningDataRequest(this.targetDate);
       } else {
-        req = this.$refs.comment.getSaveCommentDataRequest(this.targetDate);
+        req = this.$refs.comment.getSaveCommentDataRequest(
+          this.targetDate,
+          isFinish
+        );
       }
       if (req.isError) {
         this.isError = req.isError;
