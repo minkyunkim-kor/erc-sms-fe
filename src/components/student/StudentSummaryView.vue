@@ -79,6 +79,7 @@
           <v-card-text>
             <v-row justify="space-around">
               <apexchart
+                ref="monthly"
                 type="bar"
                 width="560"
                 height="400"
@@ -173,6 +174,7 @@ export default {
             this.bar_chart_options.xaxis.categories.push(key);
             this.bar_series[0].data.push(this.register[key]);
           }
+          this.$refs.monthly.updateSeries(this.bar_series);
         });
     },
     currencyFormat(num) {
