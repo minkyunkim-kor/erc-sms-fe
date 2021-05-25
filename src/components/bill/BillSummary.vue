@@ -136,7 +136,7 @@ export default {
       cash: 0,
     },
     lineSeries: [
-      { name: "매출 합계", data: [] },
+      { name: "수납금", data: [] },
       { name: "미납금", data: [] },
     ],
     lineOptions: {
@@ -249,7 +249,7 @@ export default {
             this.stackedOptions.xaxis.categories.push(
               this.targetYear + "-" + this.pad(item.month, 2)
             );
-            this.summaries.total += Number(item.deposit);
+            this.summaries.total += Number(item.tuition) + Number(item.bookPrice);
             this.summaries.card += Number(item.card);
             this.summaries.cash += Number(item.cash);
             this.lineSeries[0].data.push(item.deposit);
