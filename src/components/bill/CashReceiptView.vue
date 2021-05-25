@@ -103,3 +103,12 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.v-input /deep/ #search {
+  margin-left: 5%;
+  font-family: "NanumSquareRound", Avenir, Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  text-align: start;
+}
+</style>
