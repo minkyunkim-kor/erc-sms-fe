@@ -67,6 +67,7 @@ export default {
               absent: score.absent,
               teacher: enc.decryptValue(score.teacher),
               comment: score.comment,
+              completed: score.completed !== null ? score.completed : false,
             });
           });
         });
@@ -82,7 +83,7 @@ export default {
           extra: {
             teacher: enc.encryptValue(item.teacher),
             comment: item.comment,
-            completed: isFinish,
+            completed: Boolean(isFinish) || Boolean(item.completed),
           },
         });
       });

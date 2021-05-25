@@ -262,7 +262,12 @@ export default {
       { text: "G", align: "center", value: "scoreG", filterable: false },
       { text: "W", align: "center", value: "scoreW", filterable: false },
       { text: "S", align: "center", value: "scoreS", filterable: false },
-      { text: "담당 선생님", align: "center", value: "teacher" },
+      {
+        text: "담당 선생님",
+        align: "center",
+        value: "teacher",
+        filterable: false,
+      },
     ],
     loading: false,
   }),

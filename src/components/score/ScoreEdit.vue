@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="showEditDialog" persistent max-width="500px">
+  <v-dialog v-model="showEditDialog" persistent max-width="520px">
     <v-card>
       <v-card-title id="card-edit-title">평가 데이터 수정</v-card-title>
       <v-card-text>
@@ -100,8 +100,9 @@
           <v-col cols="4">
             <v-text-field
               id="add-input"
+              class="mt-0 pt-0"
               v-model="selected.scoreA"
-              placeholder="Attendance"
+              label="Attendance"
               type="Number"
               hide-details
             />
@@ -109,8 +110,9 @@
           <v-col cols="4">
             <v-text-field
               id="add-input"
+              class="mt-0 pt-0"
               v-model="selected.scoreH"
-              placeholder="Homework"
+              label="Homework"
               type="Number"
               hide-details
             />
@@ -120,8 +122,9 @@
           <v-col cols="4">
             <v-text-field
               id="add-input"
+              class="mt-0 pt-0"
               v-model="selected.scoreP"
-              placeholder="Participation"
+              label="Participation"
               type="Number"
               hide-details
             />
@@ -129,8 +132,9 @@
           <v-col cols="4">
             <v-text-field
               id="add-input"
+              class="mt-0 pt-0"
               v-model="selected.scoreM"
-              placeholder="Manner"
+              label="Manner"
               type="Number"
               hide-details
             />
@@ -147,8 +151,9 @@
           <v-col cols="4">
             <v-text-field
               id="add-input"
+              class="mt-0 pt-0"
               v-model="selected.scoreD"
-              placeholder="Decoding"
+              label="Decoding"
               type="Number"
               hide-details
             />
@@ -156,8 +161,9 @@
           <v-col cols="4">
             <v-text-field
               id="add-input"
+              class="mt-0 pt-0"
               v-model="selected.scoreOF"
-              placeholder="fluency"
+              label="fluency"
               type="Number"
               hide-details
             />
@@ -167,8 +173,9 @@
           <v-col cols="4">
             <v-text-field
               id="add-input"
+              class="mt-0 pt-0"
               v-model="selected.scoreC"
-              placeholder="Comprehension"
+              label="Comprehension"
               type="Number"
               hide-details
             />
@@ -176,8 +183,9 @@
           <v-col cols="4">
             <v-text-field
               id="add-input"
+              class="mt-0 pt-0"
               v-model="selected.scoreG"
-              placeholder="Grammar"
+              label="Grammar"
               type="Number"
               hide-details
             />
@@ -187,8 +195,9 @@
           <v-col cols="4">
             <v-text-field
               id="add-input"
+              class="mt-0 pt-0"
               v-model="selected.scoreS"
-              placeholder="Speaking"
+              label="Speaking"
               type="Number"
               hide-details
             />
@@ -196,8 +205,9 @@
           <v-col cols="4">
             <v-text-field
               id="add-input"
+              class="mt-0 pt-0"
               v-model="selected.scoreW"
-              placeholder="Writing"
+              label="Writing"
               type="Number"
               hide-details
             />
@@ -447,10 +457,10 @@ export default {
       }
     },
     validateAttitudeData(score) {
-      return null === score || (1 <= score && score <= 5);
+      return null !== score && score !== "" && 1 <= score && score <= 5;
     },
     validateLearningData(score) {
-      return null === score || (0 <= score && score <= 5);
+      return null !== score && score !== "" && 0 <= score && score <= 5;
     },
     clickSaveButton() {
       if (!this.validateData()) {
@@ -483,6 +493,7 @@ export default {
                 extra: {
                   teacher: enc.encryptValue(this.selected.teacher),
                   comment: this.selected.comment,
+                  completed: true,
                 },
               },
             ],
@@ -515,6 +526,12 @@ export default {
   font-size: 13px;
   text-align: center;
   margin-bottom: 0px;
+}
+.v-text-field /deep/ .v-label {
+  margin-left: 10px;
+  font-family: "NanumSquareRound", Avenir, Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  text-align: start;
 }
 .v-input /deep/ #add-input {
   margin-left: 10px;
