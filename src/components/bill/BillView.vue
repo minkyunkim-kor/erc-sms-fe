@@ -68,7 +68,16 @@
           id="action_btn_paid"
           class="elevation-0"
           small
-          v-if="item.paidStatus !== '미납'"
+          v-if="item.paidStatus === '완납'"
+          @click="clickPaidButton(item)"
+        >
+          수납
+        </v-btn>
+        <v-btn
+          id="action_btn_partial_paid"
+          class="elevation-0"
+          small
+          v-else-if="item.paidStatus === '부분납'"
           @click="clickPaidButton(item)"
         >
           수납
@@ -300,6 +309,12 @@ export default {
   font-size: 13px;
   color: white;
   background-color: grey;
+}
+.v-data-table /deep/ #action_btn_partial_paid {
+  font-family: "NanumSquareRound", sans-serif;
+  font-size: 13px;
+  color: white;
+  background-color: #f98f01;
 }
 .v-data-table /deep/ #action_btn_unpaid {
   font-family: "NanumSquareRound", sans-serif;
