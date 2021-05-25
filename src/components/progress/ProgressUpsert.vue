@@ -16,7 +16,7 @@
           <v-col cols="3">
             <v-text-field
               id="add-input"
-              prepend-icon="mdi-cake-variant"
+              prepend-icon="mdi-star-circle-outline"
               v-model="details.current"
               readonly
               hide-details

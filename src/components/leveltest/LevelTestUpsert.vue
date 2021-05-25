@@ -93,12 +93,12 @@
         </v-row>
         <v-row id="button-component" align="baseline">
           <v-spacer />
-          <v-col cols="3">
+          <v-col cols="2">
             <v-btn id="btn-cancel" block small @click="closeDialog">
               취소
             </v-btn>
           </v-col>
-          <v-col cols="3">
+          <v-col cols="2">
             <v-btn id="btn-save" block small @click="clickSaveButton">
               저장
             </v-btn>
