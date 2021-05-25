@@ -94,7 +94,7 @@
                 </td>
               </tr>
               <tr>
-                <td rowspan="2" style="background-color: #f2f2f2">수납</td>
+                <td rowspan="3" style="background-color: #f2f2f2">수납</td>
                 <td style="background-color: #f2f2f2">카드</td>
                 <td v-for="(detail, i) in details" :key="i">
                   {{ currencyFormat(detail.card) }}
@@ -104,6 +104,12 @@
                 <td style="background-color: #f2f2f2">현금</td>
                 <td v-for="(detail, i) in details" :key="i">
                   {{ currencyFormat(detail.cash) }}
+                </td>
+              </tr>
+              <tr>
+                <td style="background-color: #f2f2f2">합계</td>
+                <td v-for="(detail, i) in details" :key="i">
+                  {{ currencyFormat(Number(detail.cash) + Number(detail.card)) }}
                 </td>
               </tr>
               <tr>
