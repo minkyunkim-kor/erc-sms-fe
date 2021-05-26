@@ -65,7 +65,11 @@ export default {
       this.$store.state.uid = data.uid;
       this.$store.state.role = data.role;
       this.$store.state.name = data.name;
-      this.$router.push({ name: "lesson" });
+      if (data.role === "USER") {
+        this.$router.push({ name: "lesson" });
+      } else if (data.role === "ADMIN") {
+        this.$router.push({ name: "account" });
+      }
     },
     handleError(err) {
       if (err === "not exist user") {

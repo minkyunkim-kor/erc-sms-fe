@@ -1,24 +1,24 @@
 <template>
   <v-dialog v-model="showDialog" persistent max-width="550px">
     <v-card>
-      <v-card-title id="card-edit-title">지점 정보 수정</v-card-title>
+      <v-card-title id="card-edit-title">계정 정보 수정</v-card-title>
       <v-card-text>
         <v-row id="add-component" align="baseline">
           <v-col cols="6">
             <v-text-field
               id="add-input"
               prepend-icon="mdi-account"
-              v-model="account.name"
-              placeholder="지점명"
+              v-model="account.teacher"
+              placeholder="이름"
               hide-details
             />
           </v-col>
           <v-col cols="6">
             <v-text-field
               id="add-input"
-              prepend-icon="mdi-identifier"
-              v-model="account.id"
-              placeholder="지점 ID"
+              prepend-icon="mdi-home-variant-outline"
+              v-model="account.name"
+              placeholder="지점명"
               hide-details
             />
           </v-col>
@@ -27,17 +27,33 @@
           <v-col cols="6">
             <v-text-field
               id="add-input"
-              prepend-icon="mdi-lock"
-              v-model="account.pw"
-              placeholder="패스워드"
-              type="password"
+              prepend-icon="mdi-identifier"
+              v-model="account.id"
+              placeholder="ID"
               hide-details
             />
           </v-col>
           <v-col cols="6">
+            <v-text-field
+              id="add-input"
+              prepend-icon="mdi-lock"
+              v-model="account.pw"
+              placeholder="패스워드"
+              :append-icon="showPw ? 'mdi-eye' : 'mdi-eye-off'"
+              :type="showPw ? 'text' : 'password'"
+              @click:append="showPw = !showPw"
+              hide-details
+            />
+          </v-col>
+        </v-row>
+        <v-row align="baseline" justify="end">
+          <v-col cols="7">
+            <v-spacer />
+          </v-col>
+          <v-col cols="5">
             <v-radio-group v-model="account.suspendYn" row hide-details>
-              <v-radio label="정상 사용" value="N" />
-              <v-radio label="사용 중지" value="Y" />
+              <v-radio label="사용" value="N" />
+              <v-radio label="중지" value="Y" />
             </v-radio-group>
           </v-col>
         </v-row>
@@ -46,11 +62,6 @@
           <v-col cols="2">
             <v-btn id="btn-cancel" block small @click="closeDialog">
               취소
-            </v-btn>
-          </v-col>
-          <v-col cols="2">
-            <v-btn id="btn-remove" block small @click="removeUser">
-              삭제
             </v-btn>
           </v-col>
           <v-col cols="2">
@@ -100,6 +111,7 @@ export default {
     confirmRemove: false,
     isError: false,
     errorMessage: "",
+    showPw: false,
   }),
   methods: {
     loadAccount() {
@@ -114,6 +126,7 @@ export default {
           this.account = {
             id: response.data.id,
             pw: "",
+            teacher: response.data.teacher,
             name: response.data.name,
             suspendYn: response.data.suspendYn,
           };
@@ -135,6 +148,7 @@ export default {
           {
             id: this.account.id,
             pw: this.account.pw,
+            teacher: this.account.teacher,
             name: this.account.name,
             suspendYn: this.account.suspendYn,
             isNew: false,
@@ -150,7 +164,11 @@ export default {
     },
     checkValidate() {
       var valid = true;
-      if (this.account.id === "" || this.account.id.trim() === "") {
+      if (this.account.teacher === "" || this.account.teacher.trim() === "") {
+        this.isError = true;
+        this.errorMessage = "이름을 입력하세요";
+        valid = false;
+      } else if (this.account.id === "" || this.account.id.trim() === "") {
         this.isError = true;
         this.errorMessage = "ID를 입력하세요";
         valid = false;
@@ -161,6 +179,13 @@ export default {
       } else if (this.account.pw === "" || this.account.pw.trim() === "") {
         this.isError = true;
         this.errorMessage = "패스워드를 입력하세요";
+        valid = false;
+      } else if (
+        this.account.suspendYn === "" ||
+        this.account.suspendYn.trim() === ""
+      ) {
+        this.isError = true;
+        this.errorMessage = "상태를 입력하세요";
         valid = false;
       }
       return valid;
@@ -181,5 +206,10 @@ export default {
   font-family: "NanumSquareRound", Avenir, Helvetica, Arial, sans-serif;
   font-size: 13px;
   text-align: start;
+}
+.v-input--selection-controls /deep/ .v-label {
+  font-family: "NanumSquareRound", Avenir, Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  text-align: end;
 }
 </style>

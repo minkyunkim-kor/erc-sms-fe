@@ -233,27 +233,54 @@ export default {
     },
     checkDataValidate() {
       if (
-        this.details.testLevel === undefined ||
-        this.details.testLevel === null ||
-        this.details.testLevel.length === 0
+        this.details.testLevel !== undefined &&
+        this.details.testLevel !== null &&
+        this.details.testLevel.length > 0 &&
+        (this.details.testScore === undefined ||
+          this.details.testScore === null ||
+          this.details.testScore.length === 0)
       ) {
         this.isError = true;
-        this.errorMessage = "테스트 레벨을 선택해주세요";
+        this.errorMessage = "테스트 결과를 확인해주세요";
         return false;
-      } else if (
-        this.details.testScore === undefined ||
-        this.details.testScore === null
-      ) {
-        this.isError = true;
-        this.errorMessage = "테스트 점수을 입력해주세요";
-        return false;
-      } else if (this.details.testScore < 0 || this.details.testScore > 100) {
-        this.isError = true;
-        this.errorMessage = "올바른 테스트 점수을 입력해주세요";
-        return false;
-      } else {
-        return true;
       }
+      if (
+        this.details.testScore !== undefined &&
+        this.details.testScore !== null &&
+        this.details.testScore.length > 0 &&
+        (this.details.testLevel === undefined ||
+          this.details.testLevel === null ||
+          this.details.testLevel.length === 0)
+      ) {
+        this.isError = true;
+        this.errorMessage = "테스트 결과를 확인해주세요";
+        return false;
+      }
+      if (
+        this.details.initLevelA !== undefined &&
+        this.details.initLevelA !== null &&
+        this.details.initLevelA.length > 0 &&
+        (this.details.initLevelB === undefined ||
+          this.details.initLevelB === null ||
+          this.details.initLevelB.length === 0)
+      ) {
+        this.isError = true;
+        this.errorMessage = "시작 레벨을 확인해주세요";
+        return false;
+      }
+      if (
+        this.details.initLevelB !== undefined &&
+        this.details.initLevelB !== null &&
+        this.details.initLevelB.length > 0 &&
+        (this.details.initLevelA === undefined ||
+          this.details.initLevelA === null ||
+          this.details.initLevelA.length === 0)
+      ) {
+        this.isError = true;
+        this.errorMessage = "시작 레벨을 확인해주세요";
+        return false;
+      }
+      return true;
     },
   },
 };

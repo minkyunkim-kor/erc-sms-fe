@@ -70,7 +70,6 @@
           <v-date-picker
             v-model="endDate"
             :min="startDate"
-            :max="new Date().toISOString().substr(0, 10)"
             no-title
             scrollable
             @change="saveEndDate"

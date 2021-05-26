@@ -33,7 +33,7 @@
           :items="level_a"
           :disabled="score.absent"
           v-model="score.level_a"
-          placeholder="결과"
+          placeholder="레벨"
           hide-details
         />
       </v-col>
@@ -64,7 +64,12 @@
         />
       </v-col>
       <v-col cols="12p" id="box">
-        <v-checkbox hide-details v-model="score.absent" :disabled="availableAbsent(score)" small />
+        <v-checkbox
+          hide-details
+          v-model="score.absent"
+          :disabled="availableAbsent(score)"
+          small
+        />
       </v-col>
       <v-col cols="12p">
         <v-text-field
@@ -245,10 +250,12 @@ export default {
       return score !== null && 1 <= score && score <= 5;
     },
     availableAbsent(score) {
-      return (score.scoreA !== null && score.scoreA !== "") ||
+      return (
+        (score.scoreA !== null && score.scoreA !== "") ||
         (score.scoreH !== null && score.scoreH !== "") ||
         (score.scoreP !== null && score.scoreP !== "") ||
-        (score.scoreM !== null && score.scoreM !== "");
+        (score.scoreM !== null && score.scoreM !== "")
+      );
     },
   },
 };

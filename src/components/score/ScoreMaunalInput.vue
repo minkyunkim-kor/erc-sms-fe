@@ -58,7 +58,6 @@
               prepend-icon="mdi-home-variant-outline"
               v-model="selected.teacher"
               placeholder="담당 선생님"
-              readonly
               hide-details
             />
           </v-col>

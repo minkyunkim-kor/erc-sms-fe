@@ -10,6 +10,7 @@
               prepend-icon="mdi-account"
               v-model="selected.name"
               placeholder="한글 이름"
+              readonly
               hide-details
             />
           </v-col>
@@ -54,7 +55,6 @@
               prepend-icon="mdi-home-variant-outline"
               v-model="selected.teacher"
               placeholder="담당 선생님"
-              readonly
               hide-details
             />
           </v-col>
@@ -466,6 +466,9 @@ export default {
       if (!this.validateData()) {
         return;
       }
+      if (this.targetDate !== this.selected.targetDate) {
+        this.removeScore();
+      }
       axios
         .post(
           "http://49.50.174.126:8080/student/score",
@@ -509,6 +512,20 @@ export default {
     },
     clickRemoveButton() {
       this.removeDialog = true;
+    },
+    removeScore() {
+      axios.delete(
+        "http://49.50.174.126:8080/student/score?studentId=" +
+          this.selectedId +
+          "&targetDate=" +
+          this.targetDate,
+        {
+          headers: {
+            Authorization: "Bearer " + this.$store.state.token,
+            "erc-user-id": this.$store.state.uid,
+          },
+        }
+      );
     },
   },
 };

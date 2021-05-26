@@ -16,7 +16,7 @@
           </v-list-item-content>
         </v-list-item>
       </template>
-      <v-list>
+      <v-list v-if="role === 'USER'">
         <v-list-group no-action prepend-icon="mdi-home-variant-outline">
           <v-list-item-content slot="activator">
             <v-list-item-title>클래스 관리</v-list-item-title>
@@ -28,7 +28,7 @@
           </v-list-item>
         </v-list-group>
       </v-list>
-      <v-list>
+      <v-list v-if="role === 'USER'">
         <v-list-group no-action prepend-icon="mdi-account-details-outline">
           <v-list-item-content slot="activator">
             <v-list-item-title>학생 관리</v-list-item-title>
@@ -40,7 +40,7 @@
           </v-list-item>
         </v-list-group>
       </v-list>
-      <v-list>
+      <v-list v-if="role === 'USER'">
         <v-list-group no-action prepend-icon="mdi-file-document-outline">
           <v-list-item-content slot="activator">
             <v-list-item-title>학습 관리</v-list-item-title>
@@ -52,7 +52,7 @@
           </v-list-item>
         </v-list-group>
       </v-list>
-      <v-list>
+      <v-list v-if="role === 'USER'">
         <v-list-group no-action prepend-icon="mdi-credit-card-multiple-outline">
           <v-list-item-content slot="activator">
             <v-list-item-title>수납 관리</v-list-item-title>
@@ -65,7 +65,7 @@
         </v-list-group>
       </v-list>
       <v-list v-if="role === 'ADMIN'">
-        <v-list-group no-action prepend-icon="mdi-credit-card-multiple-outline">
+        <v-list-group no-action prepend-icon="mdi-cogs">
           <v-list-item-content slot="activator">
             <v-list-item-title>설정</v-list-item-title>
           </v-list-item-content>
@@ -100,7 +100,7 @@ export default {
       { title: "매출 현황", to: "/users/billSummary" },
       { title: "현금영수증 정보", to: "/users/cashReceipt" },
     ],
-    adminMenu: [{ title: "계정관리", to: "/users/account" }],
+    adminMenu: [{ title: "계정 관리", to: "/users/account" }],
     barColor: "#f4f6f9",
   }),
   computed: {

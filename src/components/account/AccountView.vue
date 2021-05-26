@@ -2,7 +2,7 @@
   <v-container style="max-width: 100%; padding: 0%">
     <v-row align="start">
       <v-col cols="2" class="pt-0">
-        <p id="title">계정 정보</p>
+        <p id="title">계정 관리</p>
       </v-col>
     </v-row>
     <v-row align="baseline" justify="space-between" class="mt-0">
@@ -62,9 +62,10 @@ export default {
     search: "",
     loading: false,
     headers: [
-      { text: "로그인 ID", align: "center", value: "id" },
+      { text: "이름", align: "center", value: "teacher" },
       { text: "지점명", align: "center", value: "name" },
-      { text: "사용 중지 여부", align: "center", value: "suspendYn" },
+      { text: "로그인 ID", align: "center", value: "id" },
+      { text: "상태", align: "center", value: "suspendYn" },
     ],
     showInputDialog: false,
     showEditDialog: false,
@@ -86,8 +87,9 @@ export default {
             this.users.push({
               userId: user.userId,
               id: user.id,
+              teacher: user.teacher,
               name: user.name,
-              suspendYn: user.suspendYn,
+              suspendYn: user.suspendYn === "N" ? "사용" : "중지",
             });
           });
           this.loading = false;

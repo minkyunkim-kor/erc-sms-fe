@@ -83,7 +83,7 @@ export default {
         value: "testScore",
       },
       {
-        text: "최초 레벨",
+        text: "시작 레벨",
         sortable: false,
         align: "center",
         value: "initLevel",

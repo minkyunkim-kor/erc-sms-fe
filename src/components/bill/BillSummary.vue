@@ -109,7 +109,9 @@
               <tr>
                 <td style="background-color: #f2f2f2">합계</td>
                 <td v-for="(detail, i) in details" :key="i">
-                  {{ currencyFormat(Number(detail.cash) + Number(detail.card)) }}
+                  {{
+                    currencyFormat(Number(detail.cash) + Number(detail.card))
+                  }}
                 </td>
               </tr>
               <tr>
@@ -255,7 +257,8 @@ export default {
             this.stackedOptions.xaxis.categories.push(
               this.targetYear + "-" + this.pad(item.month, 2)
             );
-            this.summaries.total += Number(item.tuition) + Number(item.bookPrice);
+            this.summaries.total +=
+              Number(item.tuition) + Number(item.bookPrice);
             this.summaries.card += Number(item.card);
             this.summaries.cash += Number(item.cash);
             this.lineSeries[0].data.push(item.deposit);
