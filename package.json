@@ -1,7 +1,7 @@
 {
   "name": "erc_student_management",
   "productName": "ERC 학생관리 프로그램",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",

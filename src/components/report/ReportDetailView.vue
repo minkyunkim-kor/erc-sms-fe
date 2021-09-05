@@ -181,7 +181,7 @@ export default {
     comment: "",
     attitudeChartOptions: {
       xaxis: { categories: ["A", "H", "P", "M"] },
-      yaxis: { min: 0, max: 6, forceNiceScale: true },
+      yaxis: { min: 0, max: 5, forceNiceScale: true },
       plotOptions: { bar: { distributed: true, horizontal: true } },
       colors: ["#64C026", "#4C72D0", "#13A79D", "#A577D7"],
       legend: { show: false },
@@ -201,7 +201,7 @@ export default {
       },
       yaxis: {
         min: 0,
-        max: 6,
+        max: 5,
         forceNiceScale: true,
         labels: {
           formatter(val) {
